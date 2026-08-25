@@ -1,2 +1,0 @@
-/usr/bin/ar qc libsister_urt_http.a CMakeFiles/sister_urt_http.dir/src/http.cpp.o
-/usr/bin/ranlib libsister_urt_http.a
