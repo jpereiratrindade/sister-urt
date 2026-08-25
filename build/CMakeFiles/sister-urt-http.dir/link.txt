@@ -1,0 +1,1 @@
+/usr/bin/c++ -O3 -DNDEBUG -Wl,--dependency-file=CMakeFiles/sister-urt-http.dir/link.d "CMakeFiles/sister-urt-http.dir/src/main_http.cpp.o" -o sister-urt-http  libsister_urt_http.a libsister_urt_repository.a libsister_urt_core.a

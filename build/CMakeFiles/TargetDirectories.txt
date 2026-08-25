@@ -1,0 +1,11 @@
+/run/media/jpereiratrindade/labeco10T/dev/cpp/sister-urt/build/CMakeFiles/sister_urt_core.dir
+/run/media/jpereiratrindade/labeco10T/dev/cpp/sister-urt/build/CMakeFiles/sister_urt_repository.dir
+/run/media/jpereiratrindade/labeco10T/dev/cpp/sister-urt/build/CMakeFiles/sister_urt_http.dir
+/run/media/jpereiratrindade/labeco10T/dev/cpp/sister-urt/build/CMakeFiles/sister-urt-cli.dir
+/run/media/jpereiratrindade/labeco10T/dev/cpp/sister-urt/build/CMakeFiles/sister-urt-http.dir
+/run/media/jpereiratrindade/labeco10T/dev/cpp/sister-urt/build/CMakeFiles/sister_urt_domain_test.dir
+/run/media/jpereiratrindade/labeco10T/dev/cpp/sister-urt/build/CMakeFiles/sister_urt_governance_test.dir
+/run/media/jpereiratrindade/labeco10T/dev/cpp/sister-urt/build/CMakeFiles/sister_urt_http_test.dir
+/run/media/jpereiratrindade/labeco10T/dev/cpp/sister-urt/build/CMakeFiles/test.dir
+/run/media/jpereiratrindade/labeco10T/dev/cpp/sister-urt/build/CMakeFiles/edit_cache.dir
+/run/media/jpereiratrindade/labeco10T/dev/cpp/sister-urt/build/CMakeFiles/rebuild_cache.dir

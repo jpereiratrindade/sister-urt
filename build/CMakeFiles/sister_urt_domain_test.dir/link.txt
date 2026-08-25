@@ -1,0 +1,1 @@
+/usr/bin/c++ -O3 -DNDEBUG -Wl,--dependency-file=CMakeFiles/sister_urt_domain_test.dir/link.d CMakeFiles/sister_urt_domain_test.dir/tests/domain_test.cpp.o -o sister_urt_domain_test  libsister_urt_core.a

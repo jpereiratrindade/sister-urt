@@ -1,0 +1,51 @@
+Start testing: Aug 25 16:06 -03
+----------------------------------------------------------
+1/3 Testing: sister_urt_domain_test
+1/3 Test: sister_urt_domain_test
+Command: "/run/media/jpereiratrindade/labeco10T/dev/cpp/sister-urt/build/sister_urt_domain_test"
+Directory: /run/media/jpereiratrindade/labeco10T/dev/cpp/sister-urt/build
+"sister_urt_domain_test" start time: Aug 25 16:06 -03
+Output:
+----------------------------------------------------------
+[PASS] Todos os testes de domínio passaram com sucesso.
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"sister_urt_domain_test" end time: Aug 25 16:06 -03
+"sister_urt_domain_test" time elapsed: 00:00:00
+----------------------------------------------------------
+
+2/3 Testing: sister_urt_governance_test
+2/3 Test: sister_urt_governance_test
+Command: "/run/media/jpereiratrindade/labeco10T/dev/cpp/sister-urt/build/sister_urt_governance_test"
+Directory: /run/media/jpereiratrindade/labeco10T/dev/cpp/sister-urt/build
+"sister_urt_governance_test" start time: Aug 25 16:06 -03
+Output:
+----------------------------------------------------------
+[PASS] Todos os testes de governança passaram com sucesso.
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"sister_urt_governance_test" end time: Aug 25 16:06 -03
+"sister_urt_governance_test" time elapsed: 00:00:00
+----------------------------------------------------------
+
+3/3 Testing: sister_urt_http_test
+3/3 Test: sister_urt_http_test
+Command: "/run/media/jpereiratrindade/labeco10T/dev/cpp/sister-urt/build/sister_urt_http_test"
+Directory: /run/media/jpereiratrindade/labeco10T/dev/cpp/sister-urt/build
+"sister_urt_http_test" start time: Aug 25 16:06 -03
+Output:
+----------------------------------------------------------
+[PASS] Todos os testes HTTP passaram com sucesso.
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"sister_urt_http_test" end time: Aug 25 16:06 -03
+"sister_urt_http_test" time elapsed: 00:00:00
+----------------------------------------------------------
+
+End testing: Aug 25 16:06 -03
