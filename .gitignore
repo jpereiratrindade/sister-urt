@@ -1,6 +1,28 @@
+# Build & Compilation Artifacts
 build/
-.cache/
-.vscode/
+bin/
+out/
+target/
 *.o
 *.a
 *.so
+*.dylib
+
+# IDE & Editor Configs
+.cache/
+.vscode/
+.idea/
+compile_commands.json
+
+# Temporary & Logs
+tmp/
+logs/
+*.log
+
+# Secrets, Environment & Certificates
+.env
+.env.*
+secrets/
+*.pem
+*.key
+*.crt

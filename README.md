@@ -104,6 +104,13 @@ Acesse no navegador:
 
 ---
 
-## 6. Licença
+## 6. Governança e Padrões de Engenharia
+
+* **[Padrão Operacional de Git (GIT_WORKFLOW_STANDARD)](file:///run/media/jpereiratrindade/labeco10T/dev/cpp/sister-urt/docs/GIT_WORKFLOW_STANDARD.md)** — Rastreabilidade, atomicidade de commits, gates pré-commit e políticas de não-regressão.
+* **[Alinhamento Constitutivo SisTer](file:///run/media/jpereiratrindade/labeco10T/dev/cpp/sister-urt/docs/alignment.md)** — Enquadramento como participante com papel de domínio autônomo.
+
+---
+
+## 7. Licença
 
 SPDX-License-Identifier: GPL-3.0-or-later
