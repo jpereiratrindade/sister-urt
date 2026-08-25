@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 #pragma once
 
+#include "sister/urt/participant.hpp"
 #include "sister/urt/repository.hpp"
 
 #include <string>
@@ -30,9 +31,11 @@ public:
     explicit Application(UrtRepository& repository, std::string index_html = {}) noexcept;
 
     [[nodiscard]] Response handle(const Request& request) const;
+    [[nodiscard]] const UrtParticipant& participant() const noexcept { return participant_; }
 
 private:
     UrtRepository& repository_;
+    UrtParticipant participant_;
     std::string index_html_;
 
     [[nodiscard]] Response handle_get_health() const;

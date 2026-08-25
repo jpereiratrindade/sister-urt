@@ -1,0 +1,894 @@
+[
+{
+  "id": "urt-rs-001",
+  "versao": 3,
+  "status_validacao": "requer_revisao",
+  "grau_completude_camada_b": 1.00,
+  "camada_a": {
+    "codigo_urt": "URT-RS-001",
+    "nome_local": "URT Silvipastoril Fazenda Santa Maria",
+    "instituicao_referencia": "EMATER-RS",
+    "municipio": "São Gabriel",
+    "uf": "RS",
+    "localidade_referencia": "Coxilha de São Rafael, km 18 da RS-630",
+    "coordenadas": {
+      "latitude": -30.336400,
+      "longitude": -54.320000,
+      "valida": true
+    },
+    "responsavel_tecnico": {
+      "nome": "Eng. Agr. Carlos Eduardo Silva",
+      "instituicao": "EMATER-RS / Regional Santa Maria",
+      "contato": "carlos.silva@emater.tche.br"
+    },
+    "propriedade": {
+      "nome": "Fazenda Santa Maria do Pampa",
+      "proprietario_responsavel": "Dr. Fernando Silveira",
+      "area_total_ha": 450.00,
+      "atividade_principal": "Pecuária de corte e silvicultura integrada"
+    }
+  },
+  "camada_b": {
+    "tipo_sistema": "SP",
+    "area_urt_ha": 35.00,
+    "data_implantacao": "2021-09-15",
+    "situacao_atual": "Ativa",
+    "especies_arboreas": "Eucalyptus grandis x urophylla (Clone H13)",
+    "pastagem_forrageira": "Campo Nativo enriquecido com Avena strigosa e Trifolium repens",
+    "componente_animal": "Bovinos de corte (Hereford e Braford)",
+    "arranjo_espacial": "Linhas Duplas",
+    "espacamento": "14m x (3m x 2m)",
+    "manejo_atual": "Pastejo rotacionado com ajuste de carga e desrama até 6m aos 3 anos"
+  },
+  "camada_c": {
+    "fonte_informacao": "Ficha Técnica institucional e visita semestral de monitoramento",
+    "data_ultima_atualizacao": "2026-03-10",
+    "observacoes": "Unidade referência para a Bacia do Rio Vacacaí; dados biométricos arbóreos consolidados.",
+    "registros_documentais": ["relatorio_visita_2026_03.pdf", "fotos_parcela_arranjo_duplo.jpg", "analise_solo_estrato_0_20cm.pdf"]
+  },
+  "historico_transicoes": [{
+  "id": "rcpt-urt-rs-001-v2",
+  "timestamp": "2026-03-12T14:30:00Z",
+  "de_status": "preliminar",
+  "para_status": "validado",
+  "autoridade": "Carlos Eduardo Silva (EMATER-RS)",
+  "motivo": "Conferência técnica in loco e consistência com protocolo experimental.",
+  "predecessor_state_id": "urt-rs-001@v1",
+  "successor_state_id": "urt-rs-001@v2"
+}, {
+  "id": "rcpt-urt-rs-001-v3",
+  "timestamp": "2026-08-25T19:40:33Z",
+  "de_status": "validado",
+  "para_status": "requer_revisao",
+  "autoridade": "Dr. Helio Tonini",
+  "motivo": "Auditoria de campo requer ajuste na densidade forrageira",
+  "predecessor_state_id": "urt-rs-001@v2",
+  "successor_state_id": "urt-rs-001@v3"
+}]
+},
+{
+  "id": "urt-sc-001",
+  "versao": 2,
+  "status_validacao": "validado",
+  "grau_completude_camada_b": 1.00,
+  "camada_a": {
+    "codigo_urt": "URT-SC-001",
+    "nome_local": "URT Canoinhas Planalto Norte",
+    "instituicao_referencia": "EPAGRI",
+    "municipio": "Canoinhas",
+    "uf": "SC",
+    "localidade_referencia": "Estrada Geral Paula Pereira",
+    "coordenadas": {
+      "latitude": -26.177200,
+      "longitude": -50.395600,
+      "valida": true
+    },
+    "responsavel_tecnico": {
+      "nome": "Dra. Juliana Mendes",
+      "instituicao": "EPAGRI / Estação Experimental Canoinhas",
+      "contato": "jmendes@epagri.sc.gov.br"
+    },
+    "propriedade": {
+      "nome": "Sítio Pinhal Alto",
+      "proprietario_responsavel": "Marcos Antônio Schiessl",
+      "area_total_ha": 62.00,
+      "atividade_principal": "Bovinocultura de leite e madeira de pinus"
+    }
+  },
+  "camada_b": {
+    "tipo_sistema": "SP",
+    "area_urt_ha": 12.50,
+    "data_implantacao": "2019-10-20",
+    "situacao_atual": "Ativa",
+    "especies_arboreas": "Pinus taeda",
+    "pastagem_forrageira": "Missioneira-Gigante (Axonopus catharinensis)",
+    "componente_animal": "Vacas Holandesas em lactação",
+    "arranjo_espacial": "Faixas",
+    "espacamento": "20m entre faixas x 2.5m na linha",
+    "manejo_atual": "Pastejo diário pós-ordenha com sombra protegida para conforto térmico"
+  },
+  "camada_c": {
+    "fonte_informacao": "Projeto Interinstitucional EPAGRI/CNPF",
+    "data_ultima_atualizacao": "2026-02-18",
+    "observacoes": "Excelente resposta de produção de leite no verão devido à amenização térmica.",
+    "registros_documentais": ["dados_conforto_termico_itu_2025.csv", "mapa_parcelas_canoinhas.png"]
+  },
+  "historico_transicoes": [{
+  "id": "rcpt-urt-sc-001-v2",
+  "timestamp": "2026-02-20T09:15:00Z",
+  "de_status": "preliminar",
+  "para_status": "validado",
+  "autoridade": "Dra. Juliana Mendes (EPAGRI)",
+  "motivo": "Dados produtivos validados com controle leiteiro oficial.",
+  "predecessor_state_id": "urt-sc-001@v1",
+  "successor_state_id": "urt-sc-001@v2"
+}]
+},
+{
+  "id": "urt-pr-001",
+  "versao": 2,
+  "status_validacao": "validado",
+  "grau_completude_camada_b": 1.00,
+  "camada_a": {
+    "codigo_urt": "URT-PR-001",
+    "nome_local": "URT Vitrine Colombo CNPF",
+    "instituicao_referencia": "EMBRAPA-CNPF",
+    "municipio": "Colombo",
+    "uf": "PR",
+    "localidade_referencia": "Sede da Embrapa Florestas, Estrada da Ribeira",
+    "coordenadas": {
+      "latitude": -25.291700,
+      "longitude": -49.164800,
+      "valida": true
+    },
+    "responsavel_tecnico": {
+      "nome": "Dr. Vanderley Porfírio-da-Silva",
+      "instituicao": "Embrapa Florestas (CNPF)",
+      "contato": "vanderley.silva@embrapa.br"
+    },
+    "propriedade": {
+      "nome": "Campo Experimental da Embrapa Florestas",
+      "proprietario_responsavel": "Embrapa",
+      "area_total_ha": 180.00,
+      "atividade_principal": "Pesquisa agroflorestal e validação tecnológica"
+    }
+  },
+  "camada_b": {
+    "tipo_sistema": "ASP",
+    "area_urt_ha": 18.00,
+    "data_implantacao": "2018-11-05",
+    "situacao_atual": "Ativa",
+    "especies_arboreas": "Grevillea robusta e Eucalyptus benthamii",
+    "pastagem_forrageira": "Rotação Lavoura-Pecuária: Soja/Milho de verão e Aveia preta + Azevém no inverno",
+    "componente_animal": "Novilhos Nelore x Angus",
+    "arranjo_espacial": "Renques",
+    "espacamento": "24m entre renques x 3m entre árvores",
+    "manejo_atual": "Plantio direto na palha na entrelinha com integração lavoura-pecuária"
+  },
+  "camada_c": {
+    "fonte_informacao": "Protocolo Científico Embrapa",
+    "data_ultima_atualizacao": "2026-04-01",
+    "observacoes": "Unidade modelo com mais de 7 anos de monitoramento contínuo de carbono e solo.",
+    "registros_documentais": ["balanco_carbono_cnpf_2025.pdf", "boletim_tecnico_colombo_v4.pdf"]
+  },
+  "historico_transicoes": [{
+  "id": "rcpt-urt-pr-001-v2",
+  "timestamp": "2026-04-02T11:00:00Z",
+  "de_status": "preliminar",
+  "para_status": "validado",
+  "autoridade": "Dr. Vanderley Silva (CNPF)",
+  "motivo": "Validação de protocolo interinstitucional completo.",
+  "predecessor_state_id": "urt-pr-001@v1",
+  "successor_state_id": "urt-pr-001@v2"
+}]
+},
+{
+  "id": "urt-rs-002",
+  "versao": 2,
+  "status_validacao": "validado",
+  "grau_completude_camada_b": 1.00,
+  "camada_a": {
+    "codigo_urt": "URT-RS-002",
+    "nome_local": "URT Pampa Bioma Bagé",
+    "instituicao_referencia": "EMBRAPA-CRSUL",
+    "municipio": "Bagé",
+    "uf": "RS",
+    "localidade_referencia": "BR-153 km 603, Campo Experimental",
+    "coordenadas": {
+      "latitude": -31.331100,
+      "longitude": -54.106900,
+      "valida": true
+    },
+    "responsavel_tecnico": {
+      "nome": "Dr. Roberto Silveira Martins",
+      "instituicao": "Embrapa Pecuária Sul (CRSul)",
+      "contato": "roberto.martins@embrapa.br"
+    },
+    "propriedade": {
+      "nome": "Estância São Marcos",
+      "proprietario_responsavel": "Família Martins",
+      "area_total_ha": 820.00,
+      "atividade_principal": "Pecuária ovina e bovina extensiva sustentável"
+    }
+  },
+  "camada_b": {
+    "tipo_sistema": "SP",
+    "area_urt_ha": 40.00,
+    "data_implantacao": "2020-05-12",
+    "situacao_atual": "Ativa",
+    "especies_arboreas": "Eucalyptus saligna em faixas e Carvalho-brasileiro nos refúgios",
+    "pastagem_forrageira": "Campo Nativo do Pampa com espécies C3 e C4 (Paspalum notatum, Coelorachis)",
+    "componente_animal": "Ovinos raça Ideal e Bovinos Angus",
+    "arranjo_espacial": "Faixas",
+    "espacamento": "28m entre faixas x 2m na linha",
+    "manejo_atual": "Manejo pastoral de precisão com oferta forrageira controlada a 12 kg MS/100 kg PV"
+  },
+  "camada_c": {
+    "fonte_informacao": "Embrapa Pecuária Sul",
+    "data_ultima_atualizacao": "2026-03-22",
+    "observacoes": "Ponto de referência para bem-estar ovino em clima subtropical com frio e geada.",
+    "registros_documentais": ["relatorio_microclima_pampa_2025.pdf", "series_temporais_peso_vivo.csv"]
+  },
+  "historico_transicoes": [{
+  "id": "rcpt-urt-rs-002-v2",
+  "timestamp": "2026-03-25T16:00:00Z",
+  "de_status": "preliminar",
+  "para_status": "validado",
+  "autoridade": "Dr. Roberto Martins (CRSul)",
+  "motivo": "Relatório de monitoramento aprovado pelo comitê regional.",
+  "predecessor_state_id": "urt-rs-002@v1",
+  "successor_state_id": "urt-rs-002@v2"
+}]
+},
+{
+  "id": "urt-sc-002",
+  "versao": 1,
+  "status_validacao": "requer_revisao",
+  "grau_completude_camada_b": 1.00,
+  "camada_a": {
+    "codigo_urt": "URT-SC-002",
+    "nome_local": "URT Planalto Serrano Lages",
+    "instituicao_referencia": "EPAGRI",
+    "municipio": "Lages",
+    "uf": "SC",
+    "localidade_referencia": "Distrito de Índios",
+    "coordenadas": {
+      "latitude": -27.815900,
+      "longitude": -50.326100,
+      "valida": true
+    },
+    "responsavel_tecnico": {
+      "nome": "Eng. Agr. Marcelo Rossi",
+      "instituicao": "EPAGRI / Regional Lages",
+      "contato": "mrossi@epagri.sc.gov.br"
+    },
+    "propriedade": {
+      "nome": "Fazenda Coxilha Rica",
+      "proprietario_responsavel": "Luiz Gonzaga de Oliveira",
+      "area_total_ha": 310.00,
+      "atividade_principal": "Gado de corte Charolês e madeira de bracatinga"
+    }
+  },
+  "camada_b": {
+    "tipo_sistema": "SP",
+    "area_urt_ha": 22.00,
+    "data_implantacao": "2022-10-10",
+    "situacao_atual": "Ativa",
+    "especies_arboreas": "Mimosa scabrella (Bracatinga) e Pinus taeda",
+    "pastagem_forrageira": "Pastagem natural de altitude melhorada com Cornichão",
+    "componente_animal": "Bovinos Charolês",
+    "arranjo_espacial": "Bosquetes",
+    "espacamento": "Bosquetes de 50m x 30m intercalados a cada 100m",
+    "manejo_atual": "Proteção contra ventos minuano no inverno e abrigo de bezerras"
+  },
+  "camada_c": {
+    "fonte_informacao": "Ficha preliminar de campo",
+    "data_ultima_atualizacao": "2026-01-15",
+    "observacoes": "Necessário atualizar o levantamento de regeneração natural da bracatinga.",
+    "registros_documentais": ["croqui_bosquetes_lages.pdf"]
+  },
+  "historico_transicoes": [{
+  "id": "rcpt-urt-sc-002-v1",
+  "timestamp": "2026-01-20T10:00:00Z",
+  "de_status": "preliminar",
+  "para_status": "requer_revisao",
+  "autoridade": "Comitê Técnico EPAGRI",
+  "motivo": "Solicitada complementação dos dados de medição dendrométrica anual.",
+  "predecessor_state_id": "urt-sc-002@v0",
+  "successor_state_id": "urt-sc-002@v1"
+}]
+},
+{
+  "id": "urt-rs-003",
+  "versao": 1,
+  "status_validacao": "preliminar",
+  "grau_completude_camada_b": 1.00,
+  "camada_a": {
+    "codigo_urt": "URT-RS-003",
+    "nome_local": "URT Depressão Central Santa Maria",
+    "instituicao_referencia": "EMATER-RS",
+    "municipio": "Santa Maria",
+    "uf": "RS",
+    "localidade_referencia": "Distrito de Pains, Estrada Municipal",
+    "coordenadas": {
+      "latitude": -29.684200,
+      "longitude": -53.806900,
+      "valida": true
+    },
+    "responsavel_tecnico": {
+      "nome": "Eng. Agr. Paulo Ricardo Santos",
+      "instituicao": "EMATER-RS / Santa Maria",
+      "contato": "paulo.santos@emater.tche.br"
+    },
+    "propriedade": {
+      "nome": "Recanto das Palmeiras",
+      "proprietario_responsavel": "Valdir Daronch",
+      "area_total_ha": 95.00,
+      "atividade_principal": "Pecuária de leite e silvicultura"
+    }
+  },
+  "camada_b": {
+    "tipo_sistema": "SP",
+    "area_urt_ha": 15.00,
+    "data_implantacao": "2023-04-18",
+    "situacao_atual": "Ativa",
+    "especies_arboreas": "Eucalyptus dunnii",
+    "pastagem_forrageira": "Tifton 85 sobressemeado com Azevém",
+    "componente_animal": "Novilhas de corte Angus",
+    "arranjo_espacial": "Linhas Simples",
+    "espacamento": "12m x 2.5m",
+    "manejo_atual": "Adubação nitrogenada na saída do inverno e controle de formigas cortadeiras"
+  },
+  "camada_c": {
+    "fonte_informacao": "Cadastro inicial pelo técnico local",
+    "data_ultima_atualizacao": "2026-04-05",
+    "observacoes": "Cadastro em fase preliminar; agendada visita com GPS de precisão para georreferenciamento perimetral.",
+    "registros_documentais": ["ficha_declaratoria_inicial.pdf"]
+  },
+  "historico_transicoes": []
+},
+{
+  "id": "urt-sc-003",
+  "versao": 2,
+  "status_validacao": "validado",
+  "grau_completude_camada_b": 1.00,
+  "camada_a": {
+    "codigo_urt": "URT-SC-003",
+    "nome_local": "URT Chapecó Erva-Mate e Leite",
+    "instituicao_referencia": "EPAGRI",
+    "municipio": "Chapecó",
+    "uf": "SC",
+    "localidade_referencia": "Linha Tomazelli",
+    "coordenadas": {
+      "latitude": -27.096300,
+      "longitude": -52.618300,
+      "valida": true
+    },
+    "responsavel_tecnico": {
+      "nome": "Eng. Agr. Gilberto Baldissera",
+      "instituicao": "EPAGRI / Chapecó",
+      "contato": "gbaldissera@epagri.sc.gov.br"
+    },
+    "propriedade": {
+      "nome": "Chácara Bela Vista",
+      "proprietario_responsavel": "Claudir Zanella",
+      "area_total_ha": 28.00,
+      "atividade_principal": "Erva-mate sombreada e bovinocultura de leite familiar"
+    }
+  },
+  "camada_b": {
+    "tipo_sistema": "SAF",
+    "area_urt_ha": 8.00,
+    "data_implantacao": "2017-08-10",
+    "situacao_atual": "Ativa",
+    "especies_arboreas": "Ilex paraguariensis (Erva-mate) consorciada com Cabreúva e Louro-pardo",
+    "pastagem_forrageira": "Capim Jique e Trevo Branco",
+    "componente_animal": "Vacas Jersey em lactação",
+    "arranjo_espacial": "Linhas Duplas",
+    "espacamento": "6m x (2m x 2m)",
+    "manejo_atual": "Poda e colheita bianual da erva-mate de sombra com agregação de valor"
+  },
+  "camada_c": {
+    "fonte_informacao": "Programa de Erva-Mate Sustentável EPAGRI",
+    "data_ultima_atualizacao": "2026-03-01",
+    "observacoes": "Modelo replicado em mais de 15 propriedades da agricultura familiar regional.",
+    "registros_documentais": ["laudo_qualidade_ervamate.pdf", "fotos_colheita_2025.jpg"]
+  },
+  "historico_transicoes": [{
+  "id": "rcpt-urt-sc-003-v2",
+  "timestamp": "2026-03-05T15:45:00Z",
+  "de_status": "preliminar",
+  "para_status": "validado",
+  "autoridade": "Gilberto Baldissera (EPAGRI)",
+  "motivo": "Sistema consolidado com dados econômicos e ambientais aprovados.",
+  "predecessor_state_id": "urt-sc-003@v1",
+  "successor_state_id": "urt-sc-003@v2"
+}]
+},
+{
+  "id": "urt-pr-002",
+  "versao": 2,
+  "status_validacao": "validado",
+  "grau_completude_camada_b": 1.00,
+  "camada_a": {
+    "codigo_urt": "URT-PR-002",
+    "nome_local": "URT Campos Gerais Ponta Grossa",
+    "instituicao_referencia": "EMBRAPA-CNPF",
+    "municipio": "Ponta Grossa",
+    "uf": "PR",
+    "localidade_referencia": "Distrito de Itaiacoca",
+    "coordenadas": {
+      "latitude": -25.091600,
+      "longitude": -50.166800,
+      "valida": true
+    },
+    "responsavel_tecnico": {
+      "nome": "Dr. Moacir Medrado",
+      "instituicao": "Embrapa Florestas (CNPF)",
+      "contato": "moacir.medrado@embrapa.br"
+    },
+    "propriedade": {
+      "nome": "Fazenda Alvorada dos Campos",
+      "proprietario_responsavel": "Henrique van der Berg",
+      "area_total_ha": 580.00,
+      "atividade_principal": "ILPF com grãos, madeira nobre e confinamento"
+    }
+  },
+  "camada_b": {
+    "tipo_sistema": "ASP",
+    "area_urt_ha": 50.00,
+    "data_implantacao": "2020-11-25",
+    "situacao_atual": "Ativa",
+    "especies_arboreas": "Eucalyptus benthamii e Pinus taeda",
+    "pastagem_forrageira": "Braquiária ruziziensis sobressemeada no milho safrinha",
+    "componente_animal": "Novilhos F1 Angus-Nelore",
+    "arranjo_espacial": "Linhas Simples",
+    "espacamento": "20m x 2m (250 árvores/ha)",
+    "manejo_atual": "Desrama até 8m e corte raso previsto para os 12 anos para laminação"
+  },
+  "camada_c": {
+    "fonte_informacao": "Rede ILPF / Embrapa",
+    "data_ultima_atualizacao": "2026-03-30",
+    "observacoes": "Unidade certificada em carne carbono neutro (CCN).",
+    "registros_documentais": ["auditoria_ccn_2025.pdf", "analise_produtividade_madeira.pdf"]
+  },
+  "historico_transicoes": [{
+  "id": "rcpt-urt-pr-002-v2",
+  "timestamp": "2026-04-01T14:00:00Z",
+  "de_status": "preliminar",
+  "para_status": "validado",
+  "autoridade": "Dr. Moacir Medrado (CNPF)",
+  "motivo": "Certificação e validação de dados de biomassa concluídas.",
+  "predecessor_state_id": "urt-pr-002@v1",
+  "successor_state_id": "urt-pr-002@v2"
+}]
+},
+{
+  "id": "urt-rs-004",
+  "versao": 1,
+  "status_validacao": "preliminar",
+  "grau_completude_camada_b": 1.00,
+  "camada_a": {
+    "codigo_urt": "URT-RS-004",
+    "nome_local": "URT Fronteira da Paz Santana",
+    "instituicao_referencia": "EMATER-RS",
+    "municipio": "Santana do Livramento",
+    "uf": "RS",
+    "localidade_referencia": "Cerro dos Martins, BR-293",
+    "coordenadas": {
+      "latitude": -30.890600,
+      "longitude": -55.532800,
+      "valida": true
+    },
+    "responsavel_tecnico": {
+      "nome": "Eng. Agr. Luiz Felipe Morales",
+      "instituicao": "EMATER-RS / Livramento",
+      "contato": "luiz.morales@emater.tche.br"
+    },
+    "propriedade": {
+      "nome": "Estância Rincão Bonito",
+      "proprietario_responsavel": "Santiago Alvez",
+      "area_total_ha": 650.00,
+      "atividade_principal": "Pecuária bovina e ovina extensiva"
+    }
+  },
+  "camada_b": {
+    "tipo_sistema": "SP",
+    "area_urt_ha": 25.00,
+    "data_implantacao": "2024-02-10",
+    "situacao_atual": "Ativa",
+    "especies_arboreas": "Eucalyptus saligna",
+    "pastagem_forrageira": "Campo nativo com predominância de Grama-forquilha",
+    "componente_animal": "Ovinos Corriedale",
+    "arranjo_espacial": "Linhas Duplas",
+    "espacamento": "16m x (3m x 2m)",
+    "manejo_atual": "Proteção de mudas com cerca elétrica de dois fios"
+  },
+  "camada_c": {
+    "fonte_informacao": "Relatório preliminar de implantação",
+    "data_ultima_atualizacao": "2026-02-28",
+    "observacoes": "Árvores no 2º ano de desenvolvimento; medições forrageiras em estruturação.",
+    "registros_documentais": ["mapa_implantacao_santana.pdf"]
+  },
+  "historico_transicoes": []
+},
+{
+  "id": "urt-sc-004",
+  "versao": 1,
+  "status_validacao": "requer_revisao",
+  "grau_completude_camada_b": 1.00,
+  "camada_a": {
+    "codigo_urt": "URT-SC-004",
+    "nome_local": "URT Alto Vale Rio do Sul",
+    "instituicao_referencia": "EPAGRI",
+    "municipio": "Rio do Sul",
+    "uf": "SC",
+    "localidade_referencia": "Comunidade Valada São Paulo",
+    "coordenadas": {
+      "latitude": -27.214400,
+      "longitude": -49.643100,
+      "valida": true
+    },
+    "responsavel_tecnico": {
+      "nome": "Eng. Agr. Renato Becker",
+      "instituicao": "EPAGRI / Regional Rio do Sul",
+      "contato": "rbecker@epagri.sc.gov.br"
+    },
+    "propriedade": {
+      "nome": "Recanto das Águas",
+      "proprietario_responsavel": "Ernesto Hoffmann",
+      "area_total_ha": 42.00,
+      "atividade_principal": "Fruticultura, pecuária de leite e palmito"
+    }
+  },
+  "camada_b": {
+    "tipo_sistema": "SAF",
+    "area_urt_ha": 6.50,
+    "data_implantacao": "2021-06-14",
+    "situacao_atual": "Ativa",
+    "especies_arboreas": "Palmito Juçara (Euterpe edulis), Banana e Cedro Rosa",
+    "pastagem_forrageira": "Capim Elefante BRS Kurumi em piquetes sombreados",
+    "componente_animal": "Vacas Jersey e galinhas caipiras em pastejo rotacionado",
+    "arranjo_espacial": "Faixas",
+    "espacamento": "Faixas multiestratificadas de 8m x 3m",
+    "manejo_atual": "Manejo agroecológico sem uso de defensivos químicos"
+  },
+  "camada_c": {
+    "fonte_informacao": "Ficha técnica EPAGRI",
+    "data_ultima_atualizacao": "2026-01-28",
+    "observacoes": "Pendente laudo fitossanitário para validação definitiva.",
+    "registros_documentais": ["relatorio_agroecologia_epagri.pdf"]
+  },
+  "historico_transicoes": [{
+  "id": "rcpt-urt-sc-004-v1",
+  "timestamp": "2026-02-05T08:30:00Z",
+  "de_status": "preliminar",
+  "para_status": "requer_revisao",
+  "autoridade": "Comitê SAF EPAGRI",
+  "motivo": "Necessário detalhamento da estratificação arbórea e taxas de desbaste.",
+  "predecessor_state_id": "urt-sc-004@v0",
+  "successor_state_id": "urt-sc-004@v1"
+}]
+},
+{
+  "id": "urt-pr-003",
+  "versao": 2,
+  "status_validacao": "validado",
+  "grau_completude_camada_b": 1.00,
+  "camada_a": {
+    "codigo_urt": "URT-PR-003",
+    "nome_local": "URT Guarapuava Terceiro Planalto",
+    "instituicao_referencia": "EMBRAPA-CNPF",
+    "municipio": "Guarapuava",
+    "uf": "PR",
+    "localidade_referencia": "Distrito de Entre Rios (Colônia Vitória)",
+    "coordenadas": {
+      "latitude": -25.395300,
+      "longitude": -51.457800,
+      "valida": true
+    },
+    "responsavel_tecnico": {
+      "nome": "Dr. Luiz Carlos Borsuk",
+      "instituicao": "Embrapa Florestas (CNPF)",
+      "contato": "luiz.borsuk@embrapa.br"
+    },
+    "propriedade": {
+      "nome": "Fazenda Vitória dos Pinheirais",
+      "proprietario_responsavel": "Cooperativa Agrária / Cooperado",
+      "area_total_ha": 340.00,
+      "atividade_principal": "Cevada, trigo, aveia e pecuária de corte integrada"
+    }
+  },
+  "camada_b": {
+    "tipo_sistema": "SP",
+    "area_urt_ha": 30.00,
+    "data_implantacao": "2019-09-02",
+    "situacao_atual": "Ativa",
+    "especies_arboreas": "Pinus elliottii e Araucaria angustifolia",
+    "pastagem_forrageira": "Hemarthria altissima sobressemeada com Trevo Branco e Azevém",
+    "componente_animal": "Bovinos Canchim e Purunã",
+    "arranjo_espacial": "Linhas Duplas",
+    "espacamento": "18m x (3m x 2.5m)",
+    "manejo_atual": "Pastejo controlado com medição contínua de ganho médio diário (GMD)"
+  },
+  "camada_c": {
+    "fonte_informacao": "Embrapa Florestas / Fundação Agrária",
+    "data_ultima_atualizacao": "2026-03-18",
+    "observacoes": "Unidade modelo para a raça Purunã (raça desenvolvida no PR) em sistema silvipastoril.",
+    "registros_documentais": ["dados_gmd_puruna_2025.csv", "boletim_clima_altitude.pdf"]
+  },
+  "historico_transicoes": [{
+  "id": "rcpt-urt-pr-003-v2",
+  "timestamp": "2026-03-20T10:00:00Z",
+  "de_status": "preliminar",
+  "para_status": "validado",
+  "autoridade": "Dr. Luiz Carlos Borsuk (CNPF)",
+  "motivo": "Série temporal de 5 anos consolidada com sucesso.",
+  "predecessor_state_id": "urt-pr-003@v1",
+  "successor_state_id": "urt-pr-003@v2"
+}]
+},
+{
+  "id": "urt-rs-005",
+  "versao": 2,
+  "status_validacao": "validado",
+  "grau_completude_camada_b": 1.00,
+  "camada_a": {
+    "codigo_urt": "URT-RS-005",
+    "nome_local": "URT Campos de Cima da Serra Vacaria",
+    "instituicao_referencia": "EMATER-RS",
+    "municipio": "Vacaria",
+    "uf": "RS",
+    "localidade_referencia": "Fazenda do Socorro, km 35 da BR-285",
+    "coordenadas": {
+      "latitude": -28.503600,
+      "longitude": -50.933900,
+      "valida": true
+    },
+    "responsavel_tecnico": {
+      "nome": "Eng. Agr. Marcos Vinícius Boeira",
+      "instituicao": "EMATER-RS / Regional Vacaria",
+      "contato": "mboeira@emater.tche.br"
+    },
+    "propriedade": {
+      "nome": "Estância dos Pinhais",
+      "proprietario_responsavel": "Guilherme Boeira de Almeida",
+      "area_total_ha": 510.00,
+      "atividade_principal": "Pecuária de corte de alta altitude e maçã"
+    }
+  },
+  "camada_b": {
+    "tipo_sistema": "SP",
+    "area_urt_ha": 28.00,
+    "data_implantacao": "2020-10-05",
+    "situacao_atual": "Ativa",
+    "especies_arboreas": "Pinus taeda e Araucaria angustifolia enxertada",
+    "pastagem_forrageira": "Aveia-preta, Azevém tetraploide e Trevo-vermelho",
+    "componente_animal": "Bovinos raça Devon",
+    "arranjo_espacial": "Renques",
+    "espacamento": "22m entre renques x 3m",
+    "manejo_atual": "Refúgio de inverno para o gado durante períodos de geada severa e neve eventual"
+  },
+  "camada_c": {
+    "fonte_informacao": "EMATER-RS / Associação de Criadores de Devon",
+    "data_ultima_atualizacao": "2026-03-29",
+    "observacoes": "Destaque para a tolerância ao frio extremo e ganho de peso nos meses de inverno.",
+    "registros_documentais": ["relatorio_desempenho_inverno_2025.pdf", "dados_termicos_subzero.csv"]
+  },
+  "historico_transicoes": [{
+  "id": "rcpt-urt-rs-005-v2",
+  "timestamp": "2026-04-02T09:30:00Z",
+  "de_status": "preliminar",
+  "para_status": "validado",
+  "autoridade": "Marcos Vinícius Boeira (EMATER-RS)",
+  "motivo": "Revisão e conferência de pesos e medidas aprovadas.",
+  "predecessor_state_id": "urt-rs-005@v1",
+  "successor_state_id": "urt-rs-005@v2"
+}]
+},
+{
+  "id": "urt-sc-005",
+  "versao": 1,
+  "status_validacao": "preliminar",
+  "grau_completude_camada_b": 1.00,
+  "camada_a": {
+    "codigo_urt": "URT-SC-005",
+    "nome_local": "URT Videira Meio-Oeste",
+    "instituicao_referencia": "EPAGRI",
+    "municipio": "Videira",
+    "uf": "SC",
+    "localidade_referencia": "Linha Imbuial",
+    "coordenadas": {
+      "latitude": -27.008300,
+      "longitude": -51.151700,
+      "valida": true
+    },
+    "responsavel_tecnico": {
+      "nome": "Eng. Agr. Fernando Ferrari",
+      "instituicao": "EPAGRI / Videira",
+      "contato": "fferrari@epagri.sc.gov.br"
+    },
+    "propriedade": {
+      "nome": "Sítio São Cristóvão",
+      "proprietario_responsavel": "Ângelo Ferrari",
+      "area_total_ha": 34.00,
+      "atividade_principal": "Fruticultura de clima temperado e ovinocultura"
+    }
+  },
+  "camada_b": {
+    "tipo_sistema": "SAF",
+    "area_urt_ha": 7.00,
+    "data_implantacao": "2023-08-20",
+    "situacao_atual": "Ativa",
+    "especies_arboreas": "Nogueira-pecã (Carya illinoinensis) e Erva-mate",
+    "pastagem_forrageira": "Trevo-branco e Azevém",
+    "componente_animal": "Ovinos Dorper",
+    "arranjo_espacial": "Linhas Simples",
+    "espacamento": "10m x 10m (Pecã) com erva-mate intercalada",
+    "manejo_atual": "Pastejo ovino para controle de invasoras no pomar de nozes"
+  },
+  "camada_c": {
+    "fonte_informacao": "Ficha de campo inicial EPAGRI",
+    "data_ultima_atualizacao": "2026-03-15",
+    "observacoes": "Unidade inovadora no consórcio de noz-pecã e ovinos no Meio-Oeste catarinense.",
+    "registros_documentais": ["croqui_pecan_ovinos.pdf"]
+  },
+  "historico_transicoes": []
+},
+{
+  "id": "urt-rs-006",
+  "versao": 2,
+  "status_validacao": "requer_revisao",
+  "grau_completude_camada_b": 1.00,
+  "camada_a": {
+    "codigo_urt": "URT-RS-006",
+    "nome_local": "URT Pelotas Encosta do Sudeste",
+    "instituicao_referencia": "EMBRAPA-CRSUL",
+    "municipio": "Pelotas",
+    "uf": "RS",
+    "localidade_referencia": "Cascata, 5º Distrito",
+    "coordenadas": {
+      "latitude": -31.765400,
+      "longitude": -52.337600,
+      "valida": true
+    },
+    "responsavel_tecnico": {
+      "nome": "Dr. Fernando Quadros",
+      "instituicao": "Embrapa Clima Temperado / CRSul parceiro",
+      "contato": "fernando.quadros@embrapa.br"
+    },
+    "propriedade": {
+      "nome": "Chácara dos Eucaliptos",
+      "proprietario_responsavel": "Espólio de Pedro Silveira",
+      "area_total_ha": 48.00,
+      "atividade_principal": "Pecuária leiteira desativada temporariamente"
+    }
+  },
+  "camada_b": {
+    "tipo_sistema": "SP",
+    "area_urt_ha": 10.00,
+    "data_implantacao": "2016-05-10",
+    "situacao_atual": "Inativa",
+    "especies_arboreas": "Acacia mearnsii (Acácia-negra) e Eucalyptus grandis",
+    "pastagem_forrageira": "Campo nativo degradado por pastejo excessivo",
+    "componente_animal": "Nenhum no momento",
+    "arranjo_espacial": "Linhas Simples",
+    "espacamento": "8m x 2m",
+    "manejo_atual": "Área em processo de sucessão patrimonial, aguardando replanejamento"
+  },
+  "camada_c": {
+    "fonte_informacao": "Visita técnica de reavaliação cadastral",
+    "data_ultima_atualizacao": "2026-02-12",
+    "observacoes": "Registrada como Inativa para fins de acompanhamento histórico sem descarte do cadastro.",
+    "registros_documentais": ["parecer_vistoria_2026_02.pdf"]
+  },
+  "historico_transicoes": [{
+  "id": "rcpt-urt-rs-006-v2",
+  "timestamp": "2026-02-15T11:20:00Z",
+  "de_status": "validado",
+  "para_status": "requer_revisao",
+  "autoridade": "Dr. Fernando Quadros (Embrapa)",
+  "motivo": "Alteração da situação de Ativa para Inativa devido à sucessão patrimonial.",
+  "predecessor_state_id": "urt-rs-006@v1",
+  "successor_state_id": "urt-rs-006@v2"
+}]
+},
+{
+  "id": "urt-pr-004",
+  "versao": 1,
+  "status_validacao": "preliminar",
+  "grau_completude_camada_b": 1.00,
+  "camada_a": {
+    "codigo_urt": "URT-PR-004",
+    "nome_local": "URT Pato Branco Sudoeste Paranaense",
+    "instituicao_referencia": "EMATER-PR",
+    "municipio": "Pato Branco",
+    "uf": "PR",
+    "localidade_referencia": "Comunidade São Caetano",
+    "coordenadas": {
+      "latitude": -26.228900,
+      "longitude": -52.671100,
+      "valida": true
+    },
+    "responsavel_tecnico": {
+      "nome": "Eng. Agr. Tiago Beltrame",
+      "instituicao": "IDR-Paraná (EMATER-PR) / Pato Branco",
+      "contato": "tiagobeltrame@idr.pr.gov.br"
+    },
+    "propriedade": {
+      "nome": "Sítio Três Colinas",
+      "proprietario_responsavel": "Valmor Beltrame",
+      "area_total_ha": 38.00,
+      "atividade_principal": "Leite a pasto e madeira nobre"
+    }
+  },
+  "camada_b": {
+    "tipo_sistema": "SP",
+    "area_urt_ha": 9.00,
+    "data_implantacao": "2022-11-15",
+    "situacao_atual": "Ativa",
+    "especies_arboreas": "Toona ciliata (Cedro Australiano) e Eucalyptus dunnii",
+    "pastagem_forrageira": "Capim Pioneiro e Capim Tifton 85",
+    "componente_animal": "Vacas Girolando e Holandesas",
+    "arranjo_espacial": "Linhas Duplas",
+    "espacamento": "15m x (3m x 2m)",
+    "manejo_atual": "Pastejo rotativo em 18 piquetes com cerca móvel"
+  },
+  "camada_c": {
+    "fonte_informacao": "Cadastro regional IDR-Paraná",
+    "data_ultima_atualizacao": "2026-03-25",
+    "observacoes": "Aguardando próxima medição dendrométrica de altura e DAP do cedro australiano.",
+    "registros_documentais": ["ficha_idr_patobranco_2026.pdf"]
+  },
+  "historico_transicoes": []
+},
+{
+  "id": "urt-rs-0015",
+  "versao": 1,
+  "status_validacao": "preliminar",
+  "grau_completude_camada_b": 1.00,
+  "camada_a": {
+    "codigo_urt": "URT-RS-0015",
+    "nome_local": "URT CPPSUL - Leitaria",
+    "instituicao_referencia": "EMBRAPA-CRSUL",
+    "municipio": "Bagé",
+    "uf": "RS",
+    "localidade_referencia": "Campo Experimental da Embrapa Pecuária Sul",
+    "coordenadas": {
+      "latitude": -31.214900,
+      "longitude": -54.013800,
+      "valida": true
+    },
+    "responsavel_tecnico": {
+      "nome": "Helio Tonini",
+      "instituicao": "Embrapa Pecuária Sul (CRSul)",
+      "contato": "helio.tonini@embrapa.br"
+    },
+    "propriedade": {
+      "nome": "Embrapa Pecuária Sul",
+      "proprietario_responsavel": "Embrapa",
+      "area_total_ha": 850.00,
+      "atividade_principal": "Pesquisa em pecuária sustentável e silvopastoril"
+    }
+  },
+  "camada_b": {
+    "tipo_sistema": "SP",
+    "area_urt_ha": 12.00,
+    "data_implantacao": "2026-08-25",
+    "situacao_atual": "Ativa",
+    "especies_arboreas": "Eucalipto",
+    "pastagem_forrageira": "Campo Nativo",
+    "componente_animal": "Gado de Leite",
+    "arranjo_espacial": "Linhas Duplas",
+    "espacamento": "14m x (3m x 2m)",
+    "manejo_atual": "Pastejo rotacionado com sombreamento para bem-estar animal"
+  },
+  "camada_c": {
+    "fonte_informacao": "Cadastro direto via interface web SisTer-URT",
+    "data_ultima_atualizacao": "2026-08-25",
+    "observacoes": "Unidade experimental de leitaria da Embrapa Pecuária Sul em Bagé.",
+    "registros_documentais": []
+  },
+  "historico_transicoes": []
+}
+]

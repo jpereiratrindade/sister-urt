@@ -1,0 +1,10 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "capability_id": "urt.metrics.evaluate",
+  "purpose": "Calcular indicadores globais de cobertura territorial, georreferenciamento e completude técnica de URTs.",
+  "owner": "sister_urt",
+  "risk": "low",
+  "authority_required": "none",
+  "side_effects": "none",
+  "transport_independent": true
+}

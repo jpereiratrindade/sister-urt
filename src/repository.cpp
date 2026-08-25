@@ -522,34 +522,66 @@ std::vector<UrtRecord> parse_urts_lista_json(std::string_view json_str) {
     return lista;
 }
 
-// Implementação dos métodos do repositório
+UrtRepository::UrtRepository(std::filesystem::path store_path, std::optional<std::filesystem::path> seed_path)
+    : storage_{std::move(store_path)}, seed_path_{std::move(seed_path)} {
+    inicializar();
+}
+
+bool UrtRepository::inicializar() {
+    std::unique_lock lock(mutex_);
+    dados_.clear();
+    ordem_insercao_.clear();
+
+    auto records = storage_.load(seed_path_);
+    for (auto& r : records) {
+        if (!r.id.empty() && dados_.find(r.id) == dados_.end()) {
+            ordem_insercao_.push_back(r.id);
+            dados_[r.id] = std::move(r);
+        }
+    }
+    return true;
+}
+
+bool UrtRepository::persist_all_unlocked(std::string* erro) {
+    std::vector<UrtRecord> lista;
+    lista.reserve(ordem_insercao_.size());
+    for (const auto& id : ordem_insercao_) {
+        auto it = dados_.find(id);
+        if (it != dados_.end()) {
+            lista.push_back(it->second);
+        }
+    }
+    return storage_.save_atomic(lista, erro);
+}
+
+bool UrtRepository::is_storage_healthy() const noexcept {
+    return storage_.is_healthy();
+}
 
 bool UrtRepository::carregar_arquivo_json(const std::string& caminho) {
-    std::ifstream file{caminho, std::ios::binary};
-    if (!file) return false;
-    std::string content{std::istreambuf_iterator<char>{file}, std::istreambuf_iterator<char>{}};
-    return carregar_string_json(content);
+    std::ifstream file(caminho);
+    if (!file.is_open()) return false;
+
+    std::stringstream ss;
+    ss << file.rdbuf();
+    return carregar_string_json(ss.str());
 }
 
 bool UrtRepository::carregar_string_json(std::string_view conteudo) {
     std::unique_lock lock(mutex_);
-    auto records = parse_urts_lista_json(conteudo);
-    if (records.empty()) {
-        // Pode ser um único objeto
-        auto single = parse_urt_json(conteudo);
-        if (single) {
-            records.push_back(std::move(*single));
-        }
-    }
+    auto lista = parse_urts_lista_json(conteudo);
+    if (lista.empty()) return false;
 
-    for (auto& rec : records) {
-        if (rec.id.empty()) continue;
-        if (dados_.find(rec.id) == dados_.end()) {
-            ordem_insercao_.push_back(rec.id);
+    dados_.clear();
+    ordem_insercao_.clear();
+    for (auto& urt : lista) {
+        if (!urt.id.empty() && dados_.find(urt.id) == dados_.end()) {
+            ordem_insercao_.push_back(urt.id);
+            dados_[urt.id] = std::move(urt);
         }
-        dados_[rec.id] = std::move(rec);
     }
-    return !records.empty();
+    persist_all_unlocked();
+    return true;
 }
 
 std::string UrtRepository::exportar_json() const {
@@ -573,19 +605,19 @@ std::vector<UrtRecord> UrtRepository::listar(const FiltroUrt& filtro) const {
     const std::string filtro_muni = to_lower_case(filtro.municipio);
     const std::string filtro_uf = to_lower_case(filtro.uf);
     const std::string filtro_tipo = to_lower_case(filtro.tipo_sistema);
-    const std::string filtro_sit = to_lower_case(filtro.situacao);
+    const std::string filtro_situ = to_lower_case(filtro.situacao);
     const std::string filtro_stat = to_lower_case(filtro.status_validacao);
     const std::string filtro_busca = to_lower_case(filtro.busca_texto);
 
     for (const auto& id : ordem_insercao_) {
-        const auto it = dados_.find(id);
+        auto it = dados_.find(id);
         if (it == dados_.end()) continue;
         const auto& urt = it->second;
 
-        if (!filtro_inst.empty() && to_lower_case(urt.camada_a.instituicao_referencia).find(filtro_inst) == std::string::npos) {
+        if (!filtro_inst.empty() && to_lower_case(urt.camada_a.instituicao_referencia) != filtro_inst) {
             continue;
         }
-        if (!filtro_muni.empty() && to_lower_case(urt.camada_a.municipio).find(filtro_muni) == std::string::npos) {
+        if (!filtro_muni.empty() && to_lower_case(urt.camada_a.municipio) != filtro_muni) {
             continue;
         }
         if (!filtro_uf.empty() && to_lower_case(urt.camada_a.uf) != filtro_uf) {
@@ -594,7 +626,7 @@ std::vector<UrtRecord> UrtRepository::listar(const FiltroUrt& filtro) const {
         if (!filtro_tipo.empty() && to_lower_case(to_string(urt.camada_b.tipo_sistema)) != filtro_tipo) {
             continue;
         }
-        if (!filtro_sit.empty() && to_lower_case(to_string(urt.camada_b.situacao_atual)) != filtro_sit) {
+        if (!filtro_situ.empty() && to_lower_case(to_string(urt.camada_b.situacao_atual)) != filtro_situ) {
             continue;
         }
         if (!filtro_stat.empty() && to_lower_case(to_string(urt.status_validacao)) != filtro_stat) {
@@ -645,6 +677,11 @@ bool UrtRepository::adicionar(UrtRecord urt, std::string* erro) {
     const std::string id = urt.id;
     ordem_insercao_.push_back(id);
     dados_[id] = std::move(urt);
+
+    if (!persist_all_unlocked(erro)) {
+        return false;
+    }
+
     return true;
 }
 
@@ -657,6 +694,26 @@ bool UrtRepository::atualizar(UrtRecord urt, std::string* erro) {
         return false;
     }
 
+    // Preservação estrita de história append-only:
+    // Atualização normal NUNCA pode apagar ou reescrever recibos existentes de transição
+    auto prev_history = it->second.historico_transicoes;
+    if (urt.historico_transicoes.empty()) {
+        urt.historico_transicoes = std::move(prev_history);
+    } else {
+        for (const auto& r : prev_history) {
+            bool exists = false;
+            for (const auto& nr : urt.historico_transicoes) {
+                if (nr.id == r.id) {
+                    exists = true;
+                    break;
+                }
+            }
+            if (!exists) {
+                urt.historico_transicoes.push_back(r);
+            }
+        }
+    }
+
     auto validacao = validar_invariantes(urt);
     if (!validacao.valido) {
         if (erro != nullptr && !validacao.erros.empty()) {
@@ -666,6 +723,11 @@ bool UrtRepository::atualizar(UrtRecord urt, std::string* erro) {
     }
 
     it->second = std::move(urt);
+
+    if (!persist_all_unlocked(erro)) {
+        return false;
+    }
+
     return true;
 }
 
@@ -680,7 +742,7 @@ TransitionResult UrtRepository::transicionar(
     if (it == dados_.end()) {
         return TransitionResult{
             .sucesso = false,
-            .erro = "URT não encontrada.",
+            .erro = "URT não encontrada para transição.",
             .recibo = {},
         };
     }
@@ -693,7 +755,11 @@ TransitionResult UrtRepository::transicionar(
         .timestamp = "",
     };
 
-    return executar_transicao_governada(it->second, request);
+    auto res = executar_transicao_governada(it->second, request);
+    if (res.sucesso) {
+        persist_all_unlocked(&res.erro);
+    }
+    return res;
 }
 
 UrtMetrics UrtRepository::obter_metricas() const {

@@ -83,6 +83,7 @@ std::string_view to_string(StatusValidacao status) noexcept {
         case StatusValidacao::Preliminar: return "preliminar";
         case StatusValidacao::RequerRevisao: return "requer_revisao";
         case StatusValidacao::Validado: return "validado";
+        case StatusValidacao::Arquivado: return "arquivado";
     }
     return "preliminar";
 }
@@ -90,6 +91,7 @@ std::string_view to_string(StatusValidacao status) noexcept {
 StatusValidacao parse_status_validacao(std::string_view str) noexcept {
     if (str == "validado" || str == "Validado" || str == "validated") return StatusValidacao::Validado;
     if (str == "requer_revisao" || str == "RequerRevisao" || str == "revisao") return StatusValidacao::RequerRevisao;
+    if (str == "arquivado" || str == "Arquivado" || str == "archived") return StatusValidacao::Arquivado;
     return StatusValidacao::Preliminar;
 }
 

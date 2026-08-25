@@ -25,7 +25,8 @@ enum class SituacaoAtual {
 enum class StatusValidacao {
     Preliminar,
     RequerRevisao,
-    Validado
+    Validado,
+    Arquivado
 };
 
 enum class ArranjoEspacial {

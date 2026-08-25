@@ -1,0 +1,10 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "capability_id": "urt.cadastro.create",
+  "purpose": "Cadastrar nova Unidade de Referência Tecnológica validando invariantes essenciais das Camadas A, B e C.",
+  "owner": "sister_urt",
+  "risk": "medium",
+  "authority_required": "tecnico_responsavel",
+  "side_effects": "state_mutation_append",
+  "transport_independent": true
+}

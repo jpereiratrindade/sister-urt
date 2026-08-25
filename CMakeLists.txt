@@ -18,6 +18,8 @@ add_library(sister_urt_core
   src/types.cpp
   src/domain.cpp
   src/governance.cpp
+  src/state_machine.cpp
+  src/persistence.cpp
 )
 target_include_directories(sister_urt_core PUBLIC include)
 sister_urt_strict(sister_urt_core)
@@ -29,15 +31,22 @@ target_include_directories(sister_urt_repository PUBLIC include)
 target_link_libraries(sister_urt_repository PUBLIC sister_urt_core)
 sister_urt_strict(sister_urt_repository)
 
+add_library(sister_urt_participant
+  src/participant.cpp
+)
+target_include_directories(sister_urt_participant PUBLIC include)
+target_link_libraries(sister_urt_participant PUBLIC sister_urt_repository)
+sister_urt_strict(sister_urt_participant)
+
 add_library(sister_urt_http
   src/http.cpp
 )
 target_include_directories(sister_urt_http PUBLIC include)
-target_link_libraries(sister_urt_http PUBLIC sister_urt_repository)
+target_link_libraries(sister_urt_http PUBLIC sister_urt_participant)
 sister_urt_strict(sister_urt_http)
 
 add_executable(sister-urt-cli src/main_cli.cpp)
-target_link_libraries(sister-urt-cli PRIVATE sister_urt_repository)
+target_link_libraries(sister-urt-cli PRIVATE sister_urt_participant)
 sister_urt_strict(sister-urt-cli)
 
 add_executable(sister-urt-http src/main_http.cpp)
@@ -56,7 +65,23 @@ target_link_libraries(sister_urt_governance_test PRIVATE sister_urt_core)
 sister_urt_strict(sister_urt_governance_test)
 add_test(NAME sister_urt_governance_test COMMAND sister_urt_governance_test)
 
+add_executable(sister_urt_state_machine_test tests/state_machine_test.cpp)
+target_link_libraries(sister_urt_state_machine_test PRIVATE sister_urt_core)
+sister_urt_strict(sister_urt_state_machine_test)
+add_test(NAME sister_urt_state_machine_test COMMAND sister_urt_state_machine_test)
+
+add_executable(sister_urt_persistence_test tests/persistence_test.cpp)
+target_link_libraries(sister_urt_persistence_test PRIVATE sister_urt_repository)
+sister_urt_strict(sister_urt_persistence_test)
+add_test(NAME sister_urt_persistence_test COMMAND sister_urt_persistence_test)
+
+add_executable(sister_urt_participant_test tests/participant_test.cpp)
+target_link_libraries(sister_urt_participant_test PRIVATE sister_urt_participant)
+sister_urt_strict(sister_urt_participant_test)
+add_test(NAME sister_urt_participant_test COMMAND sister_urt_participant_test)
+
 add_executable(sister_urt_http_test tests/http_test.cpp)
 target_link_libraries(sister_urt_http_test PRIVATE sister_urt_http)
 sister_urt_strict(sister_urt_http_test)
 add_test(NAME sister_urt_http_test COMMAND sister_urt_http_test)
+

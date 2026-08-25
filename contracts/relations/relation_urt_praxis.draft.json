@@ -1,0 +1,38 @@
+{
+  "relation_id": "rel-urt-praxis-assessment-v1",
+  "name": "Relação Governada de Avaliação Epistêmica URT-Praxis",
+  "status": "draft_candidate",
+  "participants": [
+    {
+      "system_id": "sister_urt",
+      "contextual_role": "domain",
+      "authority": "exclusive_over_urt_records_and_transitions",
+      "offers": [
+        "urt.cadastro.read",
+        "urt.dataset.export"
+      ]
+    },
+    {
+      "system_id": "sister_praxis",
+      "contextual_role": "cognitive_methodological",
+      "authority": "epistemic_assessment_and_verification_rules",
+      "offers": [
+        "praxis.evaluation.assess",
+        "praxis.evidence.verify"
+      ]
+    }
+  ],
+  "contract": "sister.relation.assessment/1.0.0",
+  "flow": {
+    "step_1": "sister_urt exports URT state/evidence references to sister_praxis",
+    "step_2": "sister_praxis performs rule & invariant assessment without modifying URT state",
+    "step_3": "sister_praxis returns assessment evidence and recommendation",
+    "step_4": "authorized human/technical actor in sister_urt executes governed state transition"
+  },
+  "governance_guarantees": {
+    "no_shared_database": true,
+    "no_silent_state_transfer": true,
+    "traceable_provenance": true,
+    "fail_closed_validation": true
+  }
+}

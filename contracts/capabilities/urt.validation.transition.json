@@ -1,0 +1,11 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "capability_id": "urt.validation.transition",
+  "purpose": "Executar transição governada de validação epistêmica na máquina de estados com geração de recibo auditável.",
+  "owner": "sister_urt",
+  "risk": "high",
+  "authority_required": "auditor_tecnico_ou_autoridade_institucional",
+  "side_effects": "state_version_advance_and_append_only_receipt",
+  "fail_closed_on_missing_authority": true,
+  "transport_independent": true
+}

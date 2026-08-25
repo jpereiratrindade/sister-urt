@@ -11,23 +11,27 @@ Conforme o Capítulo 5 do Documento Fundacional:
 
 ### 1.1. Papel Funcional de Domínio (`Domain Role`)
 O **SisTer-URT** exerce **Papel de Domínio** dentro do ecossistema:
-* **Domínio de Autoridade**: Unidades de Referência Tecnológica (URTs) em Sistemas Silvipastoris (SP), Agrossilvipastoris (ASP) e Agroflorestais (SAF) no âmbito da parceria interinstitucional **CRSul / CNPF / EMATER-RS / EPAGRI**.
-* **Estado Autoritativo Local**: Mantém a verdade e a integridade sobre o cadastro das URTs (Camada A: Essencial, Camada B: Caracterização Técnica, Camada C: Evidências e Documentos).
+* **Domínio de Autoridade**: Unidades de Referência Tecnológica (URTs) em Sistemas Silvipastoris (SP), Agrossilvipastoris (ASP) e Agroflorestais (SAF) no âmbito da parceria interinstitucional **CRSul / CNPF / EMATER-RS / EPAGRI / EMATER-PR**.
+* **Estado Autoritativo Local**: Mantém a verdade e a integridade sobre o cadastro das URTs (Camada A: Essencial, Camada B: Caracterização Técnica, Camada C: Evidências e Documentos) com persistência atômica local em `AuthoritativeStorage`.
+* **História Append-Only**: Preserva a linhagem e os recibos de transição (`TransitoryReceipt`) de forma append-only, sem alegações prematuras de imutabilidade criptográfica.
 * **Autonomia e Desacoplamento**: Opera localmente sem dependência ontológica de um banco centralizado ou orquestrador controlador (Princípios C1 e C2 da Constituição SisTer).
 
 ---
 
 ## 2. Resposta à Fronteira Mínima do Participante (Seção 7.3 do Documento Fundacional)
 
-| Operação Semântica | Resposta do SisTer-URT | Endpoint Técnico |
+A camada `sister_urt_participant` materializa a fronteira semântica de forma **independente de transporte**:
+
+| Operação Semântica | Resposta do SisTer-URT | Interface C++ / Endpoint Técnico |
 | :--- | :--- | :--- |
-| `who_are_you()` | Identidade `sister_urt`, versão `0.1.0`, papel funcional `domain` | `GET /_sister/identity` |
-| `what_can_you_do()` | Catálogo de capabilities (`urt.cadastro.read`, `urt.cadastro.create`, `urt.validation.transition`, `urt.metrics.evaluate`, `urt.dataset.export`) | `GET /_sister/capabilities` |
-| `what_do_you_own()` | Domínio exclusivo do cadastro, caracterização e validação de URTs silvipastoris | `GET /_sister/manifest` |
-| `how_to_talk_to_you()` | Contrato `sister.subsystem/1.0.0`, REST JSON em `127.0.0.1:8094` | `GET /_sister/manifest` |
-| `what_is_your_state()` | Prontidão de domínio, repositório e governança (`status: ready`) | `GET /_sister/ready`, `GET /_sister/health` |
-| `what_happened()` | Trilha de auditoria imutável com `TransitoryReceipt` (`predecessor_id` $\rightarrow$ `successor_id`, autoridade e motivo) | `GET /api/urts/{id}` |
-| `what_are_your_limits()` | Não impõe modelos climáticos globais (delega a Atmos) nem centraliza ontologia de avaliação (delega a Praxis) | Manifesto & Contratos |
+| `who_are_you()` | Identidade `sister_urt`, versão `0.1.0`, papel funcional `domain`, modelo de história `append_only_transition_history` | `UrtParticipant::who_are_you()` / `GET /_sister/identity` |
+| `what_can_you_do()` | Catálogo de capabilities (`urt.cadastro.read`, `urt.cadastro.create`, `urt.validation.transition`, `urt.metrics.evaluate`, `urt.dataset.export`) | `UrtParticipant::what_can_you_do()` / `GET /_sister/capabilities` |
+| `what_do_you_own()` | Domínio exclusivo do cadastro, caracterização e validação de URTs silvipastoris | `UrtParticipant::what_do_you_own()` / `GET /_sister/manifest` |
+| `how_to_talk_to_you()` | Contratos `sister.subsystem/1.0.0`, `sister.participant/1.0.0`, bindings `http` e `in_process_cpp` | `UrtParticipant::how_to_talk_to_you()` / `GET /_sister/manifest` |
+| `what_is_your_state()` | Prontidão observada de storage local, integridade do repositório, digest do manifesto e governança | `UrtParticipant::what_is_your_state()` / `GET /_sister/ready` |
+| `what_happened(id)` | Trilha de auditoria append-only com `TransitoryReceipt` (`predecessor_state_id` $\rightarrow$ `successor_state_id`, autoridade e motivo) | `UrtParticipant::what_happened()` / `GET /api/urts/{id}` |
+| `what_are_your_limits()` | Não impõe modelos climáticos globais (delega ao Atmos) nem centraliza avaliação metodológica (delega ao SisTer-Praxis) | `UrtParticipant::what_are_your_limits()` |
+| `what_roles_can_you_play()` | Papéis contextuais potenciais: `["domain"]` | `UrtParticipant::what_roles_can_you_play()` |
 
 ---
 
@@ -46,7 +50,7 @@ O **SisTer-URT** exerce **Papel de Domínio** dentro do ecossistema:
 │                  (Papel de Domínio)                         │
 │  - Autoridade de estado: Camadas A, B e C                   │
 │  - Persistência e governança de transições locais           │
-│  - Endpoints /_sister/* e interface web integrada           │
+│  - Camada Participant semântica e adapter HTTP              │
 └──────────────┬──────────────────────────────▲───────────────┘
                │                              │
      evidências e contextos           avaliação governada
@@ -66,4 +70,4 @@ O **SisTer-URT** exerce **Papel de Domínio** dentro do ecossistema:
 * **Porta Interna**: `127.0.0.1:8094`
 * **Health Check**: `GET /_sister/health`
 * **Host LAN/TLS**: `urt-gateway.test:8443`
-* **Contrato de Subconjunto**: `sister.subsystem/1.0.0`
+* **Contrato de Subconjunto**: `sister.subsystem/1.0.0` (Binding HTTP de compatibilidade)

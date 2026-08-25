@@ -4,10 +4,13 @@
   "name": "SisTer-URT",
   "version": "0.1.0",
   "role": "domain",
+  "potential_roles": ["domain"],
   "contract": "sister.subsystem/1.0.0",
   "adapter_version": "1.0.0",
   "mount_path": "/integrations/urt/",
   "audience": "sister_urt",
+  "governance_model": "local_governance_v1 (SisTer-Praxis assessment compatible)",
+  "history_model": "append_only_transition_history",
   "domain": [
     "silvipastoral_systems",
     "agroforestry_arrangements",

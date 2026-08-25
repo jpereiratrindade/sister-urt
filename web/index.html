@@ -1584,8 +1584,19 @@ function switchModalTab(tabId, btn) {
 async function submitTransicao() {
   if (!g_activeUrt) return;
   const novo_status = $('govNovoStatus').value;
-  const autoridade = $('govAutoridade').value || 'Técnico de Referência';
-  const motivo = $('govMotivo').value || 'Validação de conformidade técnica registrada na interface';
+  const autoridade = $('govAutoridade').value.trim();
+  const motivo = $('govMotivo').value.trim();
+
+  if (!autoridade) {
+    alert('Erro: Informe o nome e instituição da Autoridade responsável pela transição (fail-closed).');
+    $('govAutoridade').focus();
+    return;
+  }
+  if (!motivo) {
+    alert('Erro: Informe a Justificativa / Motivo técnico da transição para a trilha de auditoria (fail-closed).');
+    $('govMotivo').focus();
+    return;
+  }
 
   try {
     const res = await fetch(`/api/urts/${g_activeUrt.id}/validate`, {

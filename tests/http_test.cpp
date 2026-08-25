@@ -98,10 +98,34 @@ void test_http_health_e_rotas() {
     if (r_404.status != 404) {
         std::exit(1);
     }
+
+    // Teste POST /api/urts/{id}/validate sem autoridade (deve falhar fechado com 400)
+    const std::string bad_val_aut = R"({"novo_status":"validado","autoridade":"","motivo":"teste"})";
+    auto r_val_no_aut = app.handle(make_req("POST", "/api/urts/urt-test/validate", bad_val_aut));
+    if (r_val_no_aut.status != 400 || r_val_no_aut.body.find("fail-closed") == std::string::npos) {
+        std::cerr << "Erro: Transição sem autoridade não falhou fechada no HTTP adapter!\n";
+        std::exit(1);
+    }
+
+    // Teste POST /api/urts/{id}/validate sem motivo (deve falhar fechado com 400)
+    const std::string bad_val_mot = R"({"novo_status":"validado","autoridade":"Auditor Teste","motivo":""})";
+    auto r_val_no_mot = app.handle(make_req("POST", "/api/urts/urt-test/validate", bad_val_mot));
+    if (r_val_no_mot.status != 400 || r_val_no_mot.body.find("fail-closed") == std::string::npos) {
+        std::cerr << "Erro: Transição sem motivo não falhou fechada no HTTP adapter!\n";
+        std::exit(1);
+    }
+
+    // Teste POST /api/urts/{id}/validate com parâmetros válidos (deve ter sucesso 200)
+    const std::string ok_val = R"json({"novo_status":"validado","autoridade":"Dr. Moacir Medrado (CNPF)","motivo":"Conformidade técnica verificada"})json";
+    auto r_val_ok = app.handle(make_req("POST", "/api/urts/urt-test/validate", ok_val));
+    if (r_val_ok.status != 200 || r_val_ok.body.find("rcpt-urt-test") == std::string::npos) {
+        std::cerr << "Erro: Transição válida falhou no HTTP adapter!\n";
+        std::exit(1);
+    }
 }
 
 int main() {
     test_http_health_e_rotas();
-    std::cout << "[PASS] Todos os testes HTTP passaram com sucesso.\n";
+    std::cout << "[PASS] Todos os testes HTTP (incluindo fail-closed de autoridade e motivo) passaram com sucesso.\n";
     return 0;
 }

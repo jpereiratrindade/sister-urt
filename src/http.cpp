@@ -118,7 +118,7 @@ Request parse_raw_http_request(std::string_view raw_data) {
 }
 
 Application::Application(UrtRepository& repository, std::string index_html) noexcept
-    : repository_{repository}, index_html_{std::move(index_html)} {}
+    : repository_{repository}, participant_{repository}, index_html_{std::move(index_html)} {}
 
 Response Application::handle(const Request& request) const {
     if (request.method == "OPTIONS") {
@@ -309,8 +309,21 @@ Response Application::handle_post_validate(std::string_view id, const Request& r
         }
     }
 
-    if (autoridade.empty()) autoridade = "Técnico Responsável";
-    if (motivo.empty()) motivo = "Validação cadastral registrada na interface";
+    if (autoridade.empty()) {
+        return Response{
+            .status = 400,
+            .content_type = "application/json; charset=utf-8",
+            .body = R"({"error":"bad_request","message":"Autoridade responsável é estritamente obrigatória para transição (fail-closed)."})",
+        };
+    }
+
+    if (motivo.empty()) {
+        return Response{
+            .status = 400,
+            .content_type = "application/json; charset=utf-8",
+            .body = R"({"error":"bad_request","message":"Justificativa/motivo técnico da transição é estritamente obrigatório (fail-closed)."})",
+        };
+    }
 
     auto res = repository_.transicionar(id, parse_status_validacao(status_str), autoridade, motivo);
     if (!res.sucesso) {
@@ -338,129 +351,42 @@ Response Application::handle_get_metrics() const {
 }
 
 Response Application::handle_get_sister_manifest() const {
-    const std::string manifest_json = R"json({
-  "schema": "sister.subsystem.manifest/1.0.0",
-  "system_id": "sister_urt",
-  "name": "SisTer-URT",
-  "version": "0.1.0",
-  "role": "domain",
-  "contract": "sister.subsystem/1.0.0",
-  "adapter_version": "1.0.0",
-  "mount_path": "/integrations/urt/",
-  "audience": "sister_urt",
-  "transport": {
-    "http": true,
-    "websocket": false,
-    "internal_endpoint": "http://127.0.0.1:8094"
-  },
-  "technical_endpoints": {
-    "manifest": "/_sister/manifest",
-    "health": "/_sister/health",
-    "readiness": "/_sister/ready",
-    "capabilities": "/_sister/capabilities",
-    "identity": "/_sister/identity"
-  },
-  "capabilities": [
-    "urt.cadastro.read",
-    "urt.cadastro.create",
-    "urt.validation.transition",
-    "urt.metrics.evaluate",
-    "urt.dataset.export"
-  ],
-  "data_ownership": "exclusive",
-  "audit_level": "domain_relevant_operations",
-  "production_eligible": false
-})json";
     return Response{
         .status = 200,
         .content_type = "application/json; charset=utf-8",
-        .body = manifest_json,
+        .body = participant_.get_canonical_manifest_json(),
     };
 }
 
 Response Application::handle_get_sister_health() const {
-    std::ostringstream ss;
-    ss << "{\n"
-       << "  \"schema\": \"sister.subsystem.health/1.0.0\",\n"
-       << "  \"system_id\": \"sister_urt\",\n"
-       << "  \"status\": \"ok\",\n"
-       << "  \"checked_at\": \"" << gerar_timestamp_iso8601() << "\"\n"
-       << "}";
     return Response{
         .status = 200,
         .content_type = "application/json; charset=utf-8",
-        .body = ss.str(),
+        .body = participant_.health_to_json(),
     };
 }
 
 Response Application::handle_get_sister_ready() const {
-    const auto total = repository_.total();
-    std::ostringstream ss;
-    ss << "{\n"
-       << "  \"schema\": \"sister.subsystem.readiness/1.0.0\",\n"
-       << "  \"system_id\": \"sister_urt\",\n"
-       << "  \"status\": \"ready\",\n"
-       << "  \"contract_version\": \"1.0.0\",\n"
-       << "  \"total_cadastros\": " << total << ",\n"
-       << "  \"dependencies\": {\n"
-       << "    \"domain_core\": \"ready\",\n"
-       << "    \"repository\": \"ready\",\n"
-       << "    \"governance\": \"active\"\n"
-       << "  }\n"
-       << "}";
     return Response{
         .status = 200,
         .content_type = "application/json; charset=utf-8",
-        .body = ss.str(),
+        .body = participant_.readiness_to_json(),
     };
 }
 
 Response Application::handle_get_sister_capabilities() const {
-    const std::string caps_json = R"json({
-  "schema": "sister.subsystem.capabilities/1.0.0",
-  "system_id": "sister_urt",
-  "contract": "sister.subsystem/1.0.0",
-  "capabilities": [
-    {"id": "urt.cadastro.read", "description": "Consultar catálogo e ficha de URTs.", "risk": "low"},
-    {"id": "urt.cadastro.create", "description": "Cadastrar nova Unidade de Referência Tecnológica.", "risk": "medium"},
-    {"id": "urt.validation.transition", "description": "Executar transição governada de validação epistêmica.", "risk": "high"},
-    {"id": "urt.metrics.evaluate", "description": "Calcular indicadores de cobertura e qualidade do cadastro.", "risk": "low"},
-    {"id": "urt.dataset.export", "description": "Exportar base observacional consolidada em JSON.", "risk": "low"}
-  ]
-})json";
     return Response{
         .status = 200,
         .content_type = "application/json; charset=utf-8",
-        .body = caps_json,
+        .body = participant_.capabilities_to_json(),
     };
 }
 
 Response Application::handle_get_sister_identity() const {
-    const std::string id_json = R"json({
-  "schema": "sister.subsystem.identity/1.0.0",
-  "system_id": "sister_urt",
-  "name": "SisTer-URT",
-  "version": "0.1.0",
-  "functional_role": "domain",
-  "domain_authority": "Unidades de Referência Tecnológica (Sistemas Silvipastoris, ASP e SAF)",
-  "governance_model": "SisTer-Praxis Epistemic Transitions",
-  "partner_institutions": [
-    "CRSul",
-    "CNPF",
-    "EMATER-RS",
-    "EPAGRI",
-    "EMATER-PR"
-  ],
-  "boundaries": {
-    "state_authority": "exclusive",
-    "immutable_receipts": true,
-    "provenance_tracking": true
-  }
-})json";
     return Response{
         .status = 200,
         .content_type = "application/json; charset=utf-8",
-        .body = id_json,
+        .body = participant_.identity_to_json(),
     };
 }
 

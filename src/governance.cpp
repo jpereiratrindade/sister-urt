@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 #include "sister/urt/governance.hpp"
+#include "sister/urt/state_machine.hpp"
 
 #include <chrono>
 #include <ctime>
@@ -26,22 +27,15 @@ TransitionResult executar_transicao_governada(
 
     TransitionResult result;
 
-    if (request.autoridade.empty()) {
-        result.sucesso = false;
-        result.erro = "Autoridade responsável pela transição não informada.";
-        return result;
-    }
-
-    if (request.motivo.empty()) {
-        result.sucesso = false;
-        result.erro = "Justificativa/motivo da transição é obrigatório para auditoria.";
-        return result;
-    }
-
     const auto status_anterior = urt.status_validacao;
-    if (status_anterior == request.novo_status) {
+    TransitionContext ctx{
+        .autoridade = request.autoridade,
+        .motivo = request.motivo,
+        .role_or_scope = ""
+    };
+
+    if (!StateMachine::is_transition_allowed(status_anterior, request.novo_status, ctx, &result.erro)) {
         result.sucesso = false;
-        result.erro = "O registro já se encontra no status solicitado.";
         return result;
     }
 
