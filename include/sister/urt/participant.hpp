@@ -19,7 +19,7 @@ struct ParticipantIdentity {
     std::string domain_authority{"Unidades de Referência Tecnológica (Sistemas Silvipastoris, ASP e SAF)"};
     std::string governance_model{"local_governance_v1 (SisTer-Praxis assessment compatible)"};
     std::string history_model{"append_only_transition_history"};
-    std::vector<std::string> partner_institutions{"CRSul", "CNPF", "EMATER-RS", "EPAGRI", "EMATER-PR"};
+    std::vector<std::string> partner_institutions{"CPPSul", "CNPF", "EMATER-RS", "EPAGRI", "EMATER-PR"};
 };
 
 struct CapabilityDescriptor {

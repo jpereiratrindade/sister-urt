@@ -19,7 +19,10 @@ sister::urt::http::Request make_req(std::string method, std::string path, std::s
 } // namespace
 
 void test_http_health_e_rotas() {
-    sister::urt::UrtRepository repo;
+    auto test_path = std::filesystem::temp_directory_path() / "sister_urt_http_test.json";
+    std::error_code ec;
+    std::filesystem::remove(test_path, ec);
+    sister::urt::UrtRepository repo(test_path, std::nullopt);
 
     sister::urt::UrtRecord u;
     u.id = "urt-test";
@@ -122,6 +125,8 @@ void test_http_health_e_rotas() {
         std::cerr << "Erro: Transição válida falhou no HTTP adapter!\n";
         std::exit(1);
     }
+
+    std::filesystem::remove(test_path, ec);
 }
 
 int main() {

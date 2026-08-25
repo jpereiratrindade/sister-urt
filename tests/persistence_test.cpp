@@ -69,14 +69,14 @@ void test_urt_restart_01_lifecycle_and_transitions() {
         u.status_validacao = sister::urt::StatusValidacao::Preliminar;
         u.camada_a.codigo_urt = "URT-RST";
         u.camada_a.nome_local = "URT Ciclo de Vida";
-        u.camada_a.instituicao_referencia = "EMBRAPA-CRSUL";
+        u.camada_a.instituicao_referencia = "EMBRAPA-CPPSUL";
         u.camada_a.municipio = "Bagé";
         u.camada_a.uf = "RS";
         repo.adicionar(u);
 
         // Executa transição governada
         auto res = repo.transicionar("urt-restart", sister::urt::StatusValidacao::Validado,
-                                     "Dr. Helio Tonini (CRSul)", "Validação técnica de campo aprovada");
+                                     "Dr. Helio Tonini (CPPSul)", "Validação técnica de campo aprovada");
         assert(res.sucesso);
         assert(res.recibo.para_status == sister::urt::StatusValidacao::Validado);
     }
@@ -89,7 +89,7 @@ void test_urt_restart_01_lifecycle_and_transitions() {
         assert(found->versao == 2);
         assert(found->status_validacao == sister::urt::StatusValidacao::Validado);
         assert(found->historico_transicoes.size() == 1);
-        assert(found->historico_transicoes[0].autoridade == "Dr. Helio Tonini (CRSul)");
+        assert(found->historico_transicoes[0].autoridade == "Dr. Helio Tonini (CPPSul)");
     }
 
     std::error_code ec;

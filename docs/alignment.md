@@ -11,7 +11,7 @@ Conforme o Capítulo 5 do Documento Fundacional:
 
 ### 1.1. Papel Funcional de Domínio (`Domain Role`)
 O **SisTer-URT** exerce **Papel de Domínio** dentro do ecossistema:
-* **Domínio de Autoridade**: Unidades de Referência Tecnológica (URTs) em Sistemas Silvipastoris (SP), Agrossilvipastoris (ASP) e Agroflorestais (SAF) no âmbito da parceria interinstitucional **CRSul / CNPF / EMATER-RS / EPAGRI / EMATER-PR**.
+* **Domínio de Autoridade**: Unidades de Referência Tecnológica (URTs) em Sistemas Silvipastoris (SP), Agrossilvipastoris (ASP) e Agroflorestais (SAF) no âmbito da parceria interinstitucional **CPPSul / CNPF / EMATER-RS / EPAGRI / EMATER-PR**.
 * **Estado Autoritativo Local**: Mantém a verdade e a integridade sobre o cadastro das URTs (Camada A: Essencial, Camada B: Caracterização Técnica, Camada C: Evidências e Documentos) com persistência atômica local em `AuthoritativeStorage`.
 * **História Append-Only**: Preserva a linhagem e os recibos de transição (`TransitoryReceipt`) de forma append-only, sem alegações prematuras de imutabilidade criptográfica.
 * **Autonomia e Desacoplamento**: Opera localmente sem dependência ontológica de um banco centralizado ou orquestrador controlador (Princípios C1 e C2 da Constituição SisTer).

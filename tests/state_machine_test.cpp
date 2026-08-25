@@ -93,7 +93,7 @@ void test_urt_auth_01_fail_closed_autoridade() {
 
 void test_urt_auth_02_fail_closed_motivo() {
     TransitionContext ctx_sem_mot{
-        .autoridade = "Helio Tonini (CRSul)",
+        .autoridade = "Helio Tonini (CPPSul)",
         .motivo = "",
         .role_or_scope = ""
     };

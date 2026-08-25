@@ -193,7 +193,7 @@
     "camada_a": {
       "codigo_urt": "URT-RS-002",
       "nome_local": "URT Pampa Bioma Bagé",
-      "instituicao_referencia": "EMBRAPA-CRSUL",
+      "instituicao_referencia": "EMBRAPA-CPPSUL",
       "municipio": "Bagé",
       "uf": "RS",
       "localidade_referencia": "BR-153 km 603, Campo Experimental",
@@ -204,7 +204,7 @@
       },
       "responsavel_tecnico": {
         "nome": "Dr. Roberto Silveira Martins",
-        "instituicao": "Embrapa Pecuária Sul (CRSul)",
+        "instituicao": "Embrapa Pecuária Sul (CPPSul)",
         "contato": "roberto.martins@embrapa.br"
       },
       "propriedade": {
@@ -241,7 +241,7 @@
         "timestamp": "2026-03-25T16:00:00Z",
         "de_status": "preliminar",
         "para_status": "validado",
-        "autoridade": "Dr. Roberto Martins (CRSul)",
+        "autoridade": "Dr. Roberto Martins (CPPSul)",
         "motivo": "Relatório de monitoramento aprovado pelo comitê regional.",
         "predecessor_state_id": "urt-rs-002@v1",
         "successor_state_id": "urt-rs-002@v2"
@@ -775,7 +775,7 @@
     "camada_a": {
       "codigo_urt": "URT-RS-006",
       "nome_local": "URT Pelotas Encosta do Sudeste",
-      "instituicao_referencia": "EMBRAPA-CRSUL",
+      "instituicao_referencia": "EMBRAPA-CPPSUL",
       "municipio": "Pelotas",
       "uf": "RS",
       "localidade_referencia": "Cascata, 5º Distrito",
@@ -786,7 +786,7 @@
       },
       "responsavel_tecnico": {
         "nome": "Dr. Fernando Quadros",
-        "instituicao": "Embrapa Clima Temperado / CRSul parceiro",
+        "instituicao": "Embrapa Clima Temperado / CPPSul parceiro",
         "contato": "fernando.quadros@embrapa.br"
       },
       "propriedade": {
@@ -886,7 +886,7 @@
     "camada_a": {
       "codigo_urt": "URT-RS-0015",
       "nome_local": "URT CPPSUL - Leitaria",
-      "instituicao_referencia": "EMBRAPA-CRSUL",
+      "instituicao_referencia": "EMBRAPA-CPPSUL",
       "municipio": "Bagé",
       "uf": "RS",
       "localidade_referencia": "Campo Experimental da Embrapa Pecuária Sul",
@@ -897,7 +897,7 @@
       },
       "responsavel_tecnico": {
         "nome": "Helio Tonini",
-        "instituicao": "Embrapa Pecuária Sul (CRSul)",
+        "instituicao": "Embrapa Pecuária Sul (CPPSul)",
         "contato": "helio.tonini@embrapa.br"
       },
       "propriedade": {

@@ -1,6 +1,6 @@
 # SisTer-URT (Cadastro e Caracterização de URTs)
 
-**Sistema de domínio autônomo, observacional e governado para Unidades de Referência Tecnológica (Sistemas Silvipastoris e arranjos associados)** — Parceria interinstitucional **CRSul / CNPF / EMATER-RS / EPAGRI / EMATER-PR**.
+**Sistema de domínio autônomo, observacional e governado para Unidades de Referência Tecnológica (Sistemas Silvipastoris e arranjos associados)** — Parceria interinstitucional **CPPSul / CNPF / EMATER-RS / EPAGRI / EMATER-PR**.
 
 Construído em **C++23** com **fronteira semântica de participante SisTer**, persistência atômica local e **interface web integrada**.
 
