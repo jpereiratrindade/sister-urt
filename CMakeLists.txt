@@ -85,3 +85,11 @@ target_link_libraries(sister_urt_http_test PRIVATE sister_urt_http)
 sister_urt_strict(sister_urt_http_test)
 add_test(NAME sister_urt_http_test COMMAND sister_urt_http_test)
 
+add_test(
+  NAME sister_urt_component_runtime_contract_test
+  COMMAND bash ${CMAKE_CURRENT_SOURCE_DIR}/tests/component_runtime_contract_test.sh
+)
+set_tests_properties(
+  sister_urt_component_runtime_contract_test
+  PROPERTIES WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+)

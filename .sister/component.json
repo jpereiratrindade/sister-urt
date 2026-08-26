@@ -1,0 +1,41 @@
+{
+  "schema": "sister.component/1.0.0",
+  "component_id": "urt",
+  "system_id": "sister_urt",
+  "deployment_role": "system",
+  "semantic_contract": "sister.subsystem/1.0.0",
+  "build": {
+    "driver": "cmake-ninja/1",
+    "source": ".",
+    "build_dir": "build",
+    "configuration": "Release",
+    "tests": {
+      "driver": "ctest/1"
+    },
+    "artifacts": [
+      {
+        "id": "urt-http",
+        "path": "build/sister-urt-http",
+        "executable": true
+      },
+      {
+        "id": "urt-cli",
+        "path": "build/sister-urt-cli",
+        "executable": true
+      }
+    ]
+  },
+  "runtime": {
+    "schema": "sister.runtime/1.0.0",
+    "entrypoint": "scripts/runtime.sh",
+    "actions": [
+      "start",
+      "stop",
+      "restart",
+      "status",
+      "health",
+      "readiness"
+    ],
+    "state_policy": "persistent-external"
+  }
+}
