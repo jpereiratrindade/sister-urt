@@ -61,6 +61,9 @@ def property_names(value):
 assert not (property_names(doc) & forbidden)
 PY
 
+grep -Fq 'SISTER_RESOLVED_DEPLOYMENT_FILE' "${RUNTIME}"
+grep -Fq '.components[] | select(.system_id == $id)' "${RUNTIME}"
+
 TMP="$(mktemp -d)"
 cleanup() {
   URT_BINARY="${TMP}/fake-sister-urt-http" \

@@ -8,6 +8,39 @@ PROJECT_DIR="$(cd "${SCRIPT_DIR}/.." && pwd)"
 
 ACTION="${1:-run}"
 
+load_deployment_binding() {
+  local resolved="${SISTER_RESOLVED_DEPLOYMENT_FILE:-}"
+  [[ -n "${resolved}" ]] || return 0
+  [[ -f "${resolved}" ]] || {
+    printf '[FAIL] deployment resolvido ausente: %s\n' "${resolved}" >&2
+    return 1
+  }
+  command -v jq >/dev/null 2>&1 || {
+    printf '[FAIL] jq é necessário para consumir deployment resolvido.\n' >&2
+    return 1
+  }
+
+  local system_id transport
+  system_id="$(jq -er '.system_id' "${PROJECT_DIR}/.sister/component.json")"
+  transport="$(jq -er --arg id "${system_id}" \
+    '.components[] | select(.system_id == $id) | .runtime.transport' \
+    "${resolved}")"
+  [[ "${transport}" == "tcp" ]] || {
+    printf '[FAIL] runtime URT ainda requer binding TCP.\n' >&2
+    return 1
+  }
+  export URT_ADDRESS
+  export URT_PORT
+  URT_ADDRESS="$(jq -er --arg id "${system_id}" \
+    '.components[] | select(.system_id == $id) | .runtime.listen' \
+    "${resolved}")"
+  URT_PORT="$(jq -er --arg id "${system_id}" \
+    '.components[] | select(.system_id == $id) | .runtime.port' \
+    "${resolved}")"
+}
+
+load_deployment_binding
+
 URT_ADDRESS="${URT_ADDRESS:-127.0.0.1}"
 URT_PORT="${URT_PORT:-8094}"
 URT_STATE_DIR="${URT_STATE_DIR:-${XDG_STATE_HOME:-${HOME}/.local/state}/sister/workstation/urt}"
