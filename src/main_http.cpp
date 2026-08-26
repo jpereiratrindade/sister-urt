@@ -6,9 +6,11 @@
 #include <cerrno>
 #include <csignal>
 #include <cstring>
+#include <filesystem>
 #include <fstream>
 #include <iostream>
 #include <iterator>
+#include <optional>
 #include <poll.h>
 #include <stdexcept>
 #include <string>
@@ -28,7 +30,8 @@ struct Options {
     std::string bind_address{"127.0.0.1"};
     unsigned short port{8094};
     std::string web_index{"web/index.html"};
-    std::string data_file{"data/pilot_urts.json"};
+    std::filesystem::path store_file{"data/authoritative_store.json"};
+    std::optional<std::filesystem::path> seed_file{std::filesystem::path{"data/pilot_urts.json"}};
 };
 
 Options parse_options(int argc, char** argv) {
@@ -45,10 +48,20 @@ Options parse_options(int argc, char** argv) {
             options.port = static_cast<unsigned short>(val);
         } else if (arg == "--web-index" && i + 1 < argc) {
             options.web_index = argv[++i];
+        } else if (arg == "--store" && i + 1 < argc) {
+            options.store_file = argv[++i];
+        } else if (arg == "--seed" && i + 1 < argc) {
+            options.seed_file = std::filesystem::path{argv[++i]};
+        } else if (arg == "--no-seed") {
+            options.seed_file = std::nullopt;
         } else if (arg == "--data" && i + 1 < argc) {
-            options.data_file = argv[++i];
+            // Compatibilidade transitória: --data passa a significar seed inicial,
+            // nunca uma fonte a ser reaplicada sobre o store autoritativo.
+            options.seed_file = std::filesystem::path{argv[++i]};
         } else if (arg == "--help" || arg == "-h") {
-            std::cout << "Uso: sister-urt-http [--bind 127.0.0.1] [--port 8094] [--web-index web/index.html] [--data data/pilot_urts.json]\n";
+            std::cout << "Uso: sister-urt-http [--bind 127.0.0.1] [--port 8094] "
+                         "[--web-index web/index.html] [--store data/authoritative_store.json] "
+                         "[--seed data/pilot_urts.json|--no-seed]\n";
             std::exit(0);
         }
     }
@@ -81,14 +94,15 @@ int main(int argc, char** argv) {
     try {
         const auto options = parse_options(argc, argv);
 
-        sister::urt::UrtRepository repo;
-        if (!options.data_file.empty()) {
-            if (repo.carregar_arquivo_json(options.data_file)) {
-                std::cout << "[SisTer-URT] Base carregada com " << repo.total() << " URTs de '" << options.data_file << "'\n";
-            } else {
-                std::cout << "[SisTer-URT] Aviso: Arquivo de dados '" << options.data_file << "' não encontrado. Iniciando base vazia.\n";
-            }
+        sister::urt::UrtRepository repo{options.store_file, options.seed_file};
+        std::cout << "[SisTer-URT] Store autoritativo: '" << options.store_file.string()
+                  << "' | registros: " << repo.total();
+        if (options.seed_file.has_value()) {
+            std::cout << " | seed inicial: '" << options.seed_file->string() << "'";
+        } else {
+            std::cout << " | seed inicial: desabilitado";
         }
+        std::cout << '\n';
 
         const auto web_html = read_text_file(options.web_index);
         const sister::urt::http::Application app{repo, web_html};
