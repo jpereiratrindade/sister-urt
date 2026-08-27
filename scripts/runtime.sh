@@ -43,8 +43,11 @@ load_deployment_binding
 
 URT_ADDRESS="${URT_ADDRESS:-127.0.0.1}"
 URT_PORT="${URT_PORT:-8094}"
-URT_STATE_DIR="${URT_STATE_DIR:-${XDG_STATE_HOME:-${HOME}/.local/state}/sister/workstation/urt}"
-URT_RUNTIME_DIR="${URT_RUNTIME_DIR:-${XDG_RUNTIME_DIR:-${TMPDIR:-/tmp}}/sister/urt}"
+URT_STATE_DIR="${URT_STATE_DIR:-${SISTER_RUNTIME_STATE_DIR:-${XDG_STATE_HOME:-${HOME}/.local/state}/sister/workstation/urt}}"
+URT_RUNTIME_DIR="${URT_RUNTIME_DIR:-${SISTER_RUNTIME_RUN_DIR:-${XDG_RUNTIME_DIR:-${TMPDIR:-/tmp}}/sister/urt}}"
+export SISTER_RUNTIME_STATE_DIR="${URT_STATE_DIR}"
+export SISTER_RUNTIME_RUN_DIR="${URT_RUNTIME_DIR}"
+
 URT_STORE_PATH="${URT_STORE_PATH:-${URT_STATE_DIR}/authoritative_store.json}"
 URT_SEED_PATH="${URT_SEED_PATH:-${PROJECT_DIR}/data/pilot_urts.json}"
 URT_WEB_INDEX="${URT_WEB_INDEX:-${PROJECT_DIR}/web/index.html}"

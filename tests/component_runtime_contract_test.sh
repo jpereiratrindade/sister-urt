@@ -130,4 +130,36 @@ if run_runtime status >/dev/null 2>&1; then
   exit 1
 fi
 
+# Regressão: precedência e herança de SISTER_RUNTIME_RUN_DIR e SISTER_RUNTIME_STATE_DIR
+SANDBOX_TMP="$(mktemp -d)"
+(
+  export SISTER_RUNTIME_RUN_DIR="${SANDBOX_TMP}/run"
+  export SISTER_RUNTIME_STATE_DIR="${SANDBOX_TMP}/state"
+  mkdir -p "${SANDBOX_TMP}/run" "${SANDBOX_TMP}/state"
+
+  URT_BINARY="${TMP}/fake-sister-urt-http" \
+  URT_WEB_INDEX="${TMP}/index.html" \
+  URT_SEED_PATH="${TMP}/seed.json" \
+  PATH="${TMP}/bin:${PATH}" \
+    "${RUNTIME}" start >/dev/null
+
+  [[ -f "${SANDBOX_TMP}/run/sister-urt.pid" ]] || {
+    printf '[FAIL] sister-urt.pid não foi gravado dentro de SISTER_RUNTIME_RUN_DIR.\n' >&2
+    exit 1
+  }
+
+  child_pid="$(cat "${SANDBOX_TMP}/run/sister-urt.pid")"
+  if ! tr '\0' '\n' < "/proc/${child_pid}/environ" | grep -Fqx "SISTER_RUNTIME_RUN_DIR=${SANDBOX_TMP}/run"; then
+    printf '[FAIL] processo filho não herdou SISTER_RUNTIME_RUN_DIR no /proc/environ.\n' >&2
+    exit 1
+  fi
+
+  URT_BINARY="${TMP}/fake-sister-urt-http" \
+  URT_WEB_INDEX="${TMP}/index.html" \
+  URT_SEED_PATH="${TMP}/seed.json" \
+  PATH="${TMP}/bin:${PATH}" \
+    "${RUNTIME}" stop >/dev/null
+)
+rm -rf "${SANDBOX_TMP}"
+
 printf '[PASS] sister.component/1.0.0 + sister.runtime/1.0.0 smoke local.\n'
