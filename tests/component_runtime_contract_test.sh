@@ -63,6 +63,18 @@ PY
 
 grep -Fq 'SISTER_RESOLVED_DEPLOYMENT_FILE' "${RUNTIME}"
 grep -Fq '.components[] | select(.system_id == $id)' "${RUNTIME}"
+for marker in \
+  SISTER_RUNTIME_MODE \
+  SISTER_RUNTIME_INSTANCE_ID \
+  SISTER_RUNTIME_DATA_DIR \
+  SISTER_RUNTIME_STATE_DIR \
+  SISTER_RUNTIME_RUN_DIR
+do
+  grep -Fq "${marker}" "${RUNTIME}" || {
+    printf '[FAIL] marcador de isolamento ausente no runtime: %s\n' "${marker}" >&2
+    exit 1
+  }
+done
 
 TMP="$(mktemp -d)"
 cleanup() {
@@ -172,33 +184,81 @@ if run_runtime status >/dev/null 2>&1; then
   exit 1
 fi
 
-# Regressão: precedência e herança de SISTER_RUNTIME_RUN_DIR e SISTER_RUNTIME_STATE_DIR
+# Regressão: contrato integral de isolamento DEV Preview para persistent-external.
+# DATA_DIR governa o store persistente; STATE_DIR e RUN_DIR continuam sendo
+# fronteiras independentes fornecidas pelo Infra e todos os marcadores chegam
+# intactos ao processo filho.
 SANDBOX_TMP="$(mktemp -d)"
 (
-  export SISTER_RUNTIME_RUN_DIR="${SANDBOX_TMP}/run"
+  export SISTER_RUNTIME_MODE="dev-preview"
+  export SISTER_RUNTIME_INSTANCE_ID="urt-contract-test-001"
+  export SISTER_RUNTIME_DATA_DIR="${SANDBOX_TMP}/data"
   export SISTER_RUNTIME_STATE_DIR="${SANDBOX_TMP}/state"
-  mkdir -p "${SANDBOX_TMP}/run" "${SANDBOX_TMP}/state"
+  export SISTER_RUNTIME_RUN_DIR="${SANDBOX_TMP}/run"
+  mkdir -p \
+    "${SISTER_RUNTIME_DATA_DIR}" \
+    "${SISTER_RUNTIME_STATE_DIR}" \
+    "${SISTER_RUNTIME_RUN_DIR}" \
+    "${SANDBOX_TMP}/outside"
 
+  # Mesmo um override específico do componente não pode escapar de DATA_DIR
+  # quando o control plane forneceu uma raiz de dados da instância.
   URT_BINARY="${TMP}/fake-sister-urt-http" \
   URT_WEB_INDEX="${TMP}/index.html" \
-  URT_SEED_PATH="${TMP}/seed.json" \
+  URT_SEED_PATH="" \
+  URT_STORE_PATH="${SANDBOX_TMP}/outside/forbidden-store.json" \
+  URT_ARGS_FILE="${SANDBOX_TMP}/args-preview.txt" \
   PATH="${TMP}/bin:${PATH}" \
     "${RUNTIME}" start >/dev/null
 
-  [[ -f "${SANDBOX_TMP}/run/sister-urt.pid" ]] || {
+  [[ -f "${SISTER_RUNTIME_RUN_DIR}/sister-urt.pid" ]] || {
     printf '[FAIL] sister-urt.pid não foi gravado dentro de SISTER_RUNTIME_RUN_DIR.\n' >&2
     exit 1
   }
-
-  child_pid="$(cat "${SANDBOX_TMP}/run/sister-urt.pid")"
-  if ! tr '\0' '\n' < "/proc/${child_pid}/environ" | grep -Fqx "SISTER_RUNTIME_RUN_DIR=${SANDBOX_TMP}/run"; then
-    printf '[FAIL] processo filho não herdou SISTER_RUNTIME_RUN_DIR no /proc/environ.\n' >&2
+  [[ -f "${SISTER_RUNTIME_RUN_DIR}/sister-urt.log" ]] || {
+    printf '[FAIL] sister-urt.log não foi gravado dentro de SISTER_RUNTIME_RUN_DIR.\n' >&2
     exit 1
-  fi
+  }
+
+  python3 - \
+    "${SANDBOX_TMP}/args-preview.txt" \
+    "${SISTER_RUNTIME_DATA_DIR}/authoritative_store.json" \
+    "${SANDBOX_TMP}/outside/forbidden-store.json" <<'PY'
+import sys
+from pathlib import Path
+args = Path(sys.argv[1]).read_text(encoding="utf-8").splitlines()
+expected_store = sys.argv[2]
+forbidden_store = sys.argv[3]
+idx = args.index("--store")
+assert args[idx + 1] == expected_store
+assert forbidden_store not in args
+assert "--no-seed" in args
+PY
+
+  child_pid="$(cat "${SISTER_RUNTIME_RUN_DIR}/sister-urt.pid")"
+  child_env="$(tr '\0' '\n' < "/proc/${child_pid}/environ")"
+  for expected in \
+    "SISTER_RUNTIME_MODE=${SISTER_RUNTIME_MODE}" \
+    "SISTER_RUNTIME_INSTANCE_ID=${SISTER_RUNTIME_INSTANCE_ID}" \
+    "SISTER_RUNTIME_DATA_DIR=${SISTER_RUNTIME_DATA_DIR}" \
+    "SISTER_RUNTIME_STATE_DIR=${SISTER_RUNTIME_STATE_DIR}" \
+    "SISTER_RUNTIME_RUN_DIR=${SISTER_RUNTIME_RUN_DIR}"
+  do
+    if ! grep -Fqx "${expected}" <<< "${child_env}"; then
+      printf '[FAIL] processo filho não herdou marcador de isolamento: %s\n' "${expected}" >&2
+      exit 1
+    fi
+  done
+
+  [[ ! -e "${SANDBOX_TMP}/outside/forbidden-store.json" ]] || {
+    printf '[FAIL] preview escreveu fora de SISTER_RUNTIME_DATA_DIR.\n' >&2
+    exit 1
+  }
 
   URT_BINARY="${TMP}/fake-sister-urt-http" \
   URT_WEB_INDEX="${TMP}/index.html" \
-  URT_SEED_PATH="${TMP}/seed.json" \
+  URT_SEED_PATH="" \
+  URT_STORE_PATH="${SANDBOX_TMP}/outside/forbidden-store.json" \
   PATH="${TMP}/bin:${PATH}" \
     "${RUNTIME}" stop >/dev/null
 )

@@ -41,6 +41,14 @@ load_deployment_binding() {
 
 load_deployment_binding
 
+# Fronteiras genéricas fornecidas pelo control plane. Em DEV Preview o Infra
+# injeta identidade de sessão e diretórios exclusivos; o URT deve consumi-los
+# sem fabricar paths próprios que escapem da sandbox.
+SISTER_RUNTIME_MODE="${SISTER_RUNTIME_MODE:-}"
+SISTER_RUNTIME_INSTANCE_ID="${SISTER_RUNTIME_INSTANCE_ID:-}"
+SISTER_RUNTIME_DATA_DIR="${SISTER_RUNTIME_DATA_DIR:-}"
+export SISTER_RUNTIME_MODE SISTER_RUNTIME_INSTANCE_ID SISTER_RUNTIME_DATA_DIR
+
 URT_ADDRESS="${URT_ADDRESS:-127.0.0.1}"
 URT_PORT="${URT_PORT:-8094}"
 URT_STATE_DIR="${URT_STATE_DIR:-${SISTER_RUNTIME_STATE_DIR:-${XDG_STATE_HOME:-${HOME}/.local/state}/sister/workstation/urt}}"
@@ -48,7 +56,17 @@ URT_RUNTIME_DIR="${URT_RUNTIME_DIR:-${SISTER_RUNTIME_RUN_DIR:-${XDG_RUNTIME_DIR:
 export SISTER_RUNTIME_STATE_DIR="${URT_STATE_DIR}"
 export SISTER_RUNTIME_RUN_DIR="${URT_RUNTIME_DIR}"
 
-URT_STORE_PATH="${URT_STORE_PATH:-${URT_STATE_DIR}/authoritative_store.json}"
+# persistent-external: quando SISTER_RUNTIME_DATA_DIR existe, ela é a
+# autoridade para o dado persistente da instância. URT_STORE_PATH não pode
+# redirecionar o preview para o store operacional compartilhado.
+if [[ -n "${SISTER_RUNTIME_DATA_DIR}" ]]; then
+  URT_DATA_DIR="${SISTER_RUNTIME_DATA_DIR}"
+  URT_STORE_PATH="${URT_DATA_DIR}/authoritative_store.json"
+else
+  URT_DATA_DIR="${URT_STATE_DIR}"
+  URT_STORE_PATH="${URT_STORE_PATH:-${URT_DATA_DIR}/authoritative_store.json}"
+fi
+
 URT_SEED_PATH="${URT_SEED_PATH:-}"
 URT_PILOT_SNAPSHOT="${PROJECT_DIR}/data/fixtures/pilot_authoritative_store.snapshot.json"
 URT_WEB_INDEX="${URT_WEB_INDEX:-${PROJECT_DIR}/web/index.html}"
@@ -56,7 +74,7 @@ URT_BINARY="${URT_BINARY:-${PROJECT_DIR}/build/sister-urt-http}"
 URT_PID_FILE="${URT_PID_FILE:-${URT_RUNTIME_DIR}/sister-urt.pid}"
 URT_LOG_PATH="${URT_LOG_PATH:-${URT_RUNTIME_DIR}/sister-urt.log}"
 
-mkdir -p "${URT_STATE_DIR}" "${URT_RUNTIME_DIR}"
+mkdir -p "${URT_DATA_DIR}" "${URT_STATE_DIR}" "${URT_RUNTIME_DIR}"
 
 require_binary() {
   [[ -x "${URT_BINARY}" ]] || {

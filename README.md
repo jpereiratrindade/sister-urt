@@ -99,6 +99,8 @@ Por padrão, o runtime inicia **sem seed implícito**. O conjunto `data/pilot_ur
 URT_SEED_PATH=data/pilot_urts.json ./scripts/run.sh 8094
 ```
 
+O runtime instalado também consome as fronteiras genéricas de isolamento do SisTer. Em uma sessão DEV Preview, `SISTER_RUNTIME_MODE` e `SISTER_RUNTIME_INSTANCE_ID` identificam a instância; `SISTER_RUNTIME_DATA_DIR` é a autoridade do dado persistente; e `SISTER_RUNTIME_STATE_DIR`/`SISTER_RUNTIME_RUN_DIR` permanecem as autoridades de estado e execução. Quando `SISTER_RUNTIME_DATA_DIR` está presente, o store autoritativo é forçado para `${SISTER_RUNTIME_DATA_DIR}/authoritative_store.json`, impedindo reutilização acidental do store operacional.
+
 Acesse no navegador:
 **[http://127.0.0.1:8094/](http://127.0.0.1:8094/)**
 
