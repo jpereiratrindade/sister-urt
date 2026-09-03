@@ -30,7 +30,7 @@ struct FiltroUrt {
 class UrtRepository {
 public:
     explicit UrtRepository(std::filesystem::path store_path = "data/authoritative_store.json",
-                           std::optional<std::filesystem::path> seed_path = "data/pilot_urts.json");
+                           std::optional<std::filesystem::path> seed_path = std::nullopt);
 
     bool inicializar();
     bool carregar_arquivo_json(const std::string& caminho);

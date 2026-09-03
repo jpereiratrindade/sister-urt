@@ -31,7 +31,7 @@ struct Options {
     unsigned short port{8094};
     std::string web_index{"web/index.html"};
     std::filesystem::path store_file{"data/authoritative_store.json"};
-    std::optional<std::filesystem::path> seed_file{std::filesystem::path{"data/pilot_urts.json"}};
+    std::optional<std::filesystem::path> seed_file{std::nullopt};
 };
 
 Options parse_options(int argc, char** argv) {
@@ -61,7 +61,7 @@ Options parse_options(int argc, char** argv) {
         } else if (arg == "--help" || arg == "-h") {
             std::cout << "Uso: sister-urt-http [--bind 127.0.0.1] [--port 8094] "
                          "[--web-index web/index.html] [--store data/authoritative_store.json] "
-                         "[--seed data/pilot_urts.json|--no-seed]\n";
+                         "[--seed <arquivo>|--no-seed]\n";
             std::exit(0);
         }
     }

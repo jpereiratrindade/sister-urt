@@ -49,7 +49,8 @@ export SISTER_RUNTIME_STATE_DIR="${URT_STATE_DIR}"
 export SISTER_RUNTIME_RUN_DIR="${URT_RUNTIME_DIR}"
 
 URT_STORE_PATH="${URT_STORE_PATH:-${URT_STATE_DIR}/authoritative_store.json}"
-URT_SEED_PATH="${URT_SEED_PATH:-${PROJECT_DIR}/data/pilot_urts.json}"
+URT_SEED_PATH="${URT_SEED_PATH:-}"
+URT_PILOT_SNAPSHOT="${PROJECT_DIR}/data/fixtures/pilot_authoritative_store.snapshot.json"
 URT_WEB_INDEX="${URT_WEB_INDEX:-${PROJECT_DIR}/web/index.html}"
 URT_BINARY="${URT_BINARY:-${PROJECT_DIR}/build/sister-urt-http}"
 URT_PID_FILE="${URT_PID_FILE:-${URT_RUNTIME_DIR}/sister-urt.pid}"
@@ -112,8 +113,34 @@ server_args=(
   --port "${URT_PORT}"
   --web-index "${URT_WEB_INDEX}"
   --store "${URT_STORE_PATH}"
-  --seed "${URT_SEED_PATH}"
 )
+
+if [[ -n "${URT_SEED_PATH}" ]]; then
+  server_args+=(--seed "${URT_SEED_PATH}")
+else
+  server_args+=(--no-seed)
+fi
+
+quarantine_legacy_pilot_store() {
+  [[ -f "${URT_STORE_PATH}" ]] || return 0
+
+  local known_payload
+  for known_payload in \
+    "${URT_PILOT_SNAPSHOT}" \
+    "${PROJECT_DIR}/data/pilot_urts.json"
+  do
+    [[ -f "${known_payload}" ]] || continue
+    if cmp -s -- "${URT_STORE_PATH}" "${known_payload}"; then
+      local stamp quarantine_path
+      stamp="$(date -u +%Y%m%dT%H%M%SZ)"
+      quarantine_path="${URT_STORE_PATH}.pilot-quarantined.${stamp}"
+      mv -- "${URT_STORE_PATH}" "${quarantine_path}"
+      printf '[NOTICE] store legado composto apenas pelos 16 registros piloto foi retirado do estado ativo e preservado em: %s\n' \
+        "${quarantine_path}"
+      return 0
+    fi
+  done
+}
 
 start_background() {
   require_binary
@@ -133,6 +160,8 @@ start_background() {
   fi
 
   rm -f "${URT_PID_FILE}"
+
+  quarantine_legacy_pilot_store
 
   nohup "${URT_BINARY}" "${server_args[@]}" \
     >> "${URT_LOG_PATH}" 2>&1 &
@@ -238,6 +267,7 @@ readiness_runtime() {
 
 run_foreground() {
   require_binary
+  quarantine_legacy_pilot_store
 
   printf '%s\n' "$$" > "${URT_PID_FILE}"
 

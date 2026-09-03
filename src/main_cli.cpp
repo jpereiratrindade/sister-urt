@@ -33,7 +33,6 @@ int main(int argc, char** argv) {
     }
 
     sister::urt::UrtRepository repo;
-    repo.carregar_arquivo_json("data/pilot_urts.json");
 
     const std::string_view cmd{argv[1]};
 

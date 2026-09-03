@@ -26,3 +26,6 @@ secrets/
 *.pem
 *.key
 *.crt
+
+# Runtime state (local development)
+/data/authoritative_store.json

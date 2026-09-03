@@ -84,6 +84,9 @@ printf '[]\n' > "${TMP}/seed.json"
 
 cat > "${TMP}/fake-sister-urt-http" <<'SH'
 #!/usr/bin/env bash
+if [[ -n "${URT_ARGS_FILE:-}" ]]; then
+  printf '%s\n' "$@" > "${URT_ARGS_FILE}"
+fi
 trap 'exit 0' TERM INT
 while true; do
   sleep 1
@@ -113,17 +116,56 @@ run_runtime() {
   URT_RUNTIME_DIR="${TMP}/run" \
   URT_WEB_INDEX="${TMP}/index.html" \
   URT_SEED_PATH="${TMP}/seed.json" \
+  URT_ARGS_FILE="${TMP}/args-explicit.txt" \
+  PATH="${TMP}/bin:${PATH}" \
+    "${RUNTIME}" "$@"
+}
+
+run_runtime_no_seed() {
+  URT_BINARY="${TMP}/fake-sister-urt-http" \
+  URT_STATE_DIR="${TMP}/state" \
+  URT_RUNTIME_DIR="${TMP}/run" \
+  URT_WEB_INDEX="${TMP}/index.html" \
+  URT_SEED_PATH="" \
+  URT_ARGS_FILE="${TMP}/args-no-seed.txt" \
   PATH="${TMP}/bin:${PATH}" \
     "${RUNTIME}" "$@"
 }
 
 run_runtime start
+python3 - "${TMP}/args-explicit.txt" "${TMP}/seed.json" <<'PY'
+import sys
+from pathlib import Path
+args = Path(sys.argv[1]).read_text(encoding="utf-8").splitlines()
+seed = sys.argv[2]
+idx = args.index("--seed")
+assert args[idx + 1] == seed
+assert "--no-seed" not in args
+PY
 run_runtime status
 run_runtime health >/dev/null
 run_runtime readiness >/dev/null
 run_runtime restart
 run_runtime status
 run_runtime stop
+
+# Instalação normal: sem seed implícito. Um store legado composto exatamente
+# pelo payload piloto conhecido é retirado do estado ativo, mas preservado.
+cp "${ROOT}/data/fixtures/pilot_authoritative_store.snapshot.json" \
+  "${TMP}/state/authoritative_store.json"
+run_runtime_no_seed start
+python3 - "${TMP}/args-no-seed.txt" "${TMP}/state" <<'PY'
+import sys
+from pathlib import Path
+args = Path(sys.argv[1]).read_text(encoding="utf-8").splitlines()
+state = Path(sys.argv[2])
+assert "--no-seed" in args
+assert "--seed" not in args
+assert not (state / "authoritative_store.json").exists()
+backups = list(state.glob("authoritative_store.json.pilot-quarantined.*"))
+assert len(backups) == 1
+PY
+run_runtime_no_seed stop
 
 if run_runtime status >/dev/null 2>&1; then
   printf '[FAIL] status deveria falhar após stop.\n' >&2

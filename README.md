@@ -92,6 +92,13 @@ Suíte de testes executada:
 ```bash
 ./scripts/run.sh 8094
 ```
+
+Por padrão, o runtime inicia **sem seed implícito**. O conjunto `data/pilot_urts.json` é uma fixture não autoritativa preservada para demonstração/testes e só é carregada mediante solicitação explícita, por exemplo:
+
+```bash
+URT_SEED_PATH=data/pilot_urts.json ./scripts/run.sh 8094
+```
+
 Acesse no navegador:
 **[http://127.0.0.1:8094/](http://127.0.0.1:8094/)**
 

@@ -4,6 +4,7 @@
 
 #include <cassert>
 #include <filesystem>
+#include <fstream>
 #include <iostream>
 
 namespace {
@@ -16,6 +17,46 @@ std::filesystem::path get_test_store_path(std::string_view name) {
 }
 
 } // namespace
+
+
+void test_urt_seed_00_default_is_empty_and_explicit_seed_is_preserved() {
+    auto default_store = get_test_store_path("seed_00_default_store");
+
+    {
+        sister::urt::UrtRepository repo(default_store);
+        assert(repo.total() == 0);
+        assert(!std::filesystem::exists(default_store));
+    }
+
+    auto explicit_store = get_test_store_path("seed_00_explicit_store");
+    auto explicit_seed = get_test_store_path("seed_00_explicit_seed");
+
+    sister::urt::UrtRecord pilot;
+    pilot.id = "urt-pilot-explicit";
+    pilot.camada_a.codigo_urt = "URT-PILOT";
+    pilot.camada_a.nome_local = "Fixture piloto explícita";
+    pilot.camada_a.instituicao_referencia = "TEST";
+    pilot.camada_a.municipio = "Bagé";
+    pilot.camada_a.uf = "RS";
+
+    {
+        std::ofstream out(explicit_seed, std::ios::trunc);
+        assert(out.is_open());
+        out << sister::urt::to_json(std::vector<sister::urt::UrtRecord>{pilot});
+    }
+
+    {
+        sister::urt::UrtRepository repo(explicit_store, explicit_seed);
+        assert(repo.total() == 1);
+        assert(repo.buscar_por_id("urt-pilot-explicit").has_value());
+        assert(std::filesystem::exists(explicit_store));
+    }
+
+    std::error_code ec;
+    std::filesystem::remove(default_store, ec);
+    std::filesystem::remove(explicit_store, ec);
+    std::filesystem::remove(explicit_seed, ec);
+}
 
 void test_urt_persist_01_atomic_save_and_load() {
     auto test_path = get_test_store_path("persist_01");
@@ -143,9 +184,10 @@ void test_urt_hist_01_append_only_history_preservation() {
 }
 
 int main() {
+    test_urt_seed_00_default_is_empty_and_explicit_seed_is_preserved();
     test_urt_persist_01_atomic_save_and_load();
     test_urt_restart_01_lifecycle_and_transitions();
     test_urt_hist_01_append_only_history_preservation();
-    std::cout << "[PASS] URT-PERSIST-01, URT-RESTART-01, URT-HIST-01 passaram com sucesso.\n";
+    std::cout << "[PASS] URT-SEED-00, URT-PERSIST-01, URT-RESTART-01, URT-HIST-01 passaram com sucesso.\n";
     return 0;
 }
