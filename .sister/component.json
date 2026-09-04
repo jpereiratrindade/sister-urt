@@ -4,6 +4,15 @@
   "system_id": "sister_urt",
   "deployment_role": "system",
   "semantic_contract": "sister.subsystem/1.0.0",
+  "interaction_surfaces": [
+    {
+      "surface_id": "urt-registry",
+      "label": "URT",
+      "purpose": "Cadastrar e caracterizar Unidades de Referência Tecnológica",
+      "path": "/",
+      "access_class": "research"
+    }
+  ],
   "build": {
     "driver": "cmake-ninja/1",
     "source": ".",
